@@ -24,6 +24,7 @@ import androidx.navigation.compose.rememberNavController
 import com.ryen.spendulum.screens.Expenses
 import com.ryen.spendulum.screens.Settings
 import com.ryen.spendulum.ui.theme.SpendulumTheme
+import com.ryen.spendulum.ui.theme.TopAppBarBackground
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,11 +34,10 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 val backStackEntry = navController.currentBackStackEntryAsState()
                 Scaffold(
-                    topBar = {
-
-                    },
                     bottomBar = {
-                        NavigationBar {
+                        NavigationBar(
+                            containerColor = TopAppBarBackground
+                        ) {
                             NavigationBarItem(
                                 selected = backStackEntry.value?.destination?.route == "expenses",
                                 onClick = { navController.navigate("expenses") },
@@ -78,7 +78,7 @@ class MainActivity : ComponentActivity() {
                                 }
                             )
                             NavigationBarItem(
-                                selected = backStackEntry.value?.destination?.route == "settings",
+                                selected = backStackEntry.value?.destination?.route?.startsWith("settings") ?: false,
                                 onClick = { navController.navigate("settings") },
                                 label = {
                                     Text(text = "Settings")

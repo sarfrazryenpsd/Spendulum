@@ -10,7 +10,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -42,20 +44,26 @@ fun Settings(navController: NavController) {
             ) {
                 Column(
                     modifier = Modifier
-                    //.padding(8.dp)
+                    .padding(8.dp)
                     .fillMaxWidth()
-                    .clip(Shapes.medium)
+                    .clip(Shapes.large)
                     .background(BackGroundElevate)
-                    //.padding(8.dp)
                 ) {
-                    TableRow(label = "Categories", hasArrow = true)
-                    Spacer(
-                        modifier = Modifier
-                            .padding(horizontal = 8.dp)
-                            .height(0.7f.dp)
-                            .fillMaxWidth()
-                            .background(Divider.copy(alpha = 1f)))
-                    TableRow(label = "Erase all data", isDestructive = true)
+                    TableRow(
+                        label = "Categories",
+                        hasArrow = true,
+                        onClick = {navController.navigate("settings/categories")}
+                    )
+                    HorizontalDivider(
+                        color = Divider,
+                        thickness = 1.dp,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+                    TableRow(
+                        label = "Erase Data",
+                        isDestructive = true,
+                        onClick = {}
+                    )
                 }
             }
         }
