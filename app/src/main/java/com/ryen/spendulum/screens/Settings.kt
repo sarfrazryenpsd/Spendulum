@@ -3,6 +3,7 @@
 package com.ryen.spendulum.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -23,12 +24,13 @@ import com.ryen.spendulum.ui.theme.BackGroundElevate
 import com.ryen.spendulum.ui.theme.Divider
 import com.ryen.spendulum.ui.theme.Shapes
 import com.ryen.spendulum.ui.theme.TopAppBarBackground
+import com.ryen.spendulum.ui.theme.Typography
 
 @Composable
 fun Settings(navController: NavController) {
     Scaffold (
         topBar = {
-            MediumTopAppBar(title = { Text("Settings") }, colors = TopAppBarDefaults.mediumTopAppBarColors(
+            MediumTopAppBar(title = { Text(text = "Settings", style = Typography.titleLarge) }, colors = TopAppBarDefaults.mediumTopAppBarColors(
                 containerColor = TopAppBarBackground,
                 titleContentColor = Color.White
             ))
@@ -47,7 +49,7 @@ fun Settings(navController: NavController) {
                     TableRow(
                         label = "Categories",
                         hasArrow = true,
-                        onClick = {navController.navigate("settings/categories")}
+                        modifier = Modifier.clickable { navController.navigate("settings/categories") },
                     )
                     HorizontalDivider(
                         color = Divider,
@@ -57,7 +59,7 @@ fun Settings(navController: NavController) {
                     TableRow(
                         label = "Erase Data",
                         isDestructive = true,
-                        onClick = {}
+                        modifier = Modifier.clickable {  }
                     )
                 }
             }

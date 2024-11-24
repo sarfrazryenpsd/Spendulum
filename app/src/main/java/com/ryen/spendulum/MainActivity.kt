@@ -21,6 +21,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.ryen.spendulum.screens.Add
 import com.ryen.spendulum.screens.Expenses
 import com.ryen.spendulum.screens.Settings
 import com.ryen.spendulum.ui.theme.SpendulumTheme
@@ -108,10 +109,7 @@ class MainActivity : ComponentActivity() {
                                 )
                             }
                             composable("add") {
-                                Greeting(
-                                    name = "Add",
-                                    modifier = Modifier.fillMaxSize()
-                                )
+                                Add()
                             }
                             composable("settings") {
                                 Settings(navController)

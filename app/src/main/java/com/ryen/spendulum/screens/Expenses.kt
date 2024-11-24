@@ -14,12 +14,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import com.ryen.spendulum.ui.theme.TopAppBarBackground
+import com.ryen.spendulum.ui.theme.Typography
 
 @Composable
 fun Expenses(navController: NavController) {
     Scaffold (
         topBar = {
-            MediumTopAppBar(title = { Text("Expenses") }, colors = TopAppBarDefaults.mediumTopAppBarColors(
+            MediumTopAppBar(title = { Text("Expenses",style = Typography.titleLarge) }, colors = TopAppBarDefaults.mediumTopAppBarColors(
                 containerColor = TopAppBarBackground,
                 titleContentColor = Color.White
             ))

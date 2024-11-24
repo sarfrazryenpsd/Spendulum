@@ -1,8 +1,8 @@
 package com.ryen.spendulum.components
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -23,17 +23,17 @@ import com.ryen.spendulum.ui.theme.Typography
 @Composable
 fun TableRow(
     label: String,
-    hasArrow: Boolean = false,
+    modifier: Modifier = Modifier,
+    hasArrow: Boolean? = false,
+    content: (@Composable RowScope.() -> Unit)? = null,
     isDestructive: Boolean = false,
-    onClick: (String) -> Unit
 ) {
 
     val textColor = if(isDestructive) Destructive else TextPrimary
 
     Row(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .clickable { onClick(label) }
             .padding(horizontal = 16.dp, vertical = 10.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
@@ -43,9 +43,10 @@ fun TableRow(
             style = Typography.bodyMedium,
             color = textColor,
         )
-        if(hasArrow) {
+        if(hasArrow == true) {
             Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = null, tint = Color.White.copy(alpha = 0.3f))
         }
+        if (content != null) content()
     }
 }
 
@@ -53,13 +54,13 @@ fun TableRow(
 @Composable
 private fun TableRow1() {
     SpendulumTheme {
-        TableRow(label = "Categories", hasArrow = true, onClick = {})
+        TableRow(label = "Categories", hasArrow = true)
     }
 }
 @Preview
 @Composable
 private fun TableRow2() {
     SpendulumTheme {
-        TableRow(label = "Erase all data", isDestructive = true, hasArrow = true, onClick = {})
+        TableRow(label = "Erase all data", isDestructive = true, hasArrow = true)
     }
 }
