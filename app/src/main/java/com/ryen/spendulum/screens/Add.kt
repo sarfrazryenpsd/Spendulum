@@ -1,10 +1,7 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 
 package com.ryen.spendulum.screens
 
-import android.app.DatePickerDialog
-import android.icu.util.Calendar
-import android.widget.DatePicker
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -35,31 +32,40 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.marosseleng.compose.material3.datetimepickers.date.ui.dialog.DatePickerDialog
 import com.ryen.spendulum.components.TableRow
+import com.ryen.spendulum.models.Recurrence
 import com.ryen.spendulum.ui.theme.BackGroundElevate
 import com.ryen.spendulum.ui.theme.Divider
 import com.ryen.spendulum.ui.theme.Shapes
 import com.ryen.spendulum.ui.theme.SpendulumTheme
 import com.ryen.spendulum.ui.theme.TopAppBarBackground
 import com.ryen.spendulum.ui.theme.Typography
+import com.ryen.spendulum.viewModels.AddViewModel
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Composable
-fun Add() {
+fun Add(addViewModel: AddViewModel = AddViewModel()) {
+
+    val state by addViewModel.state.collectAsState()
+
     Scaffold (
         topBar = {
             MediumTopAppBar(title = { Text("Add",style = Typography.titleLarge) }, colors = TopAppBarDefaults.mediumTopAppBarColors(
@@ -68,36 +74,17 @@ fun Add() {
             ))
         },
         content = {innerPadding ->
-            var textState by remember { mutableStateOf("") }
-            var noteState by remember { mutableStateOf("") }
             val maxAmount = 1000000.00
 
-//            var openDatePicker = remember { mutableStateOf(true) }
-
-            val context = LocalContext.current
-
-            val mDay: Int
-            val mMonth: Int
-            val mYear: Int
-            val mCalendar = Calendar.getInstance()
-
-            mYear = mCalendar.get(Calendar.YEAR)
-            mMonth = mCalendar.get(Calendar.MONTH)
-            mDay = mCalendar.get(Calendar.DAY_OF_MONTH)
-            var dateResult by remember { mutableStateOf(
-                "${mCalendar.get(Calendar.DAY_OF_MONTH)}-${mCalendar.get(Calendar.MONTH) + 1 }-${mCalendar.get(Calendar.YEAR)}"
-            ) }
-
-            val mDatePicker = DatePickerDialog(
-                context,
-                { _: DatePicker, selectedYear: Int, selectedMonth: Int, selectedDayOfMonth: Int ->
-                    dateResult = "${selectedDayOfMonth}-${selectedMonth + 1 }-${selectedYear}"
-                },
-                mYear,
-                mMonth,
-                mDay
+            val recurrences = listOf(
+                Recurrence.None,
+                Recurrence.Daily,
+                Recurrence.Weekly,
+                Recurrence.Monthly,
+                Recurrence.Yearly
             )
-            mDatePicker.datePicker.maxDate = mCalendar.timeInMillis
+
+
 
             Column(
                 modifier = Modifier.padding(innerPadding)
@@ -113,21 +100,23 @@ fun Add() {
                         label = "Amount",
                         content = {
                             BasicTextField(
-                                value = textState,
+                                value = state.amount,
                                 onValueChange = { newValue ->
                                     val filteredValue = newValue.filter { it.isDigit() || it == '.' }
 
                                     // Parse and enforce max value
                                     val amount = filteredValue.toDoubleOrNull() ?: 0.0
                                     if (amount <= maxAmount) {
-                                        textState = if (filteredValue.count { it == '.' } <= 1) {
-                                            // Limit to two decimal places
-                                            filteredValue.takeWhile { it.isDigit() || it == '.' }
-                                        } else textState
+                                        if (filteredValue.count { it == '.' } <= 1) {
+                                            addViewModel.setAmount(
+                                                filteredValue.takeWhile { it.isDigit() || it == '.' }
+                                            )
+
+                                        } else addViewModel.setAmount(state.amount)
                                     }
                                 },
                                 decorationBox = { innerTextField ->
-                                    if (textState.isEmpty()) {
+                                    if (state.amount.isEmpty()) {
                                         // Placeholder text
                                         Text(
                                             text = "$0.00",
@@ -157,7 +146,6 @@ fun Add() {
                         label = "Recurrence",
                         content = {
                             var expanded by remember { mutableStateOf(false) } // Track DropdownMenu state
-                            var recurrenceItem by remember { mutableStateOf("None") } // Track selected item // Track selected item
 
                             Row(
                                 modifier = Modifier
@@ -166,7 +154,7 @@ fun Add() {
                             ) {
                                 // Display the selected text
                                 Text(
-                                    text = recurrenceItem,
+                                    text = state.recurrence.name,
                                     style = Typography.bodyMedium,
                                     color = ButtonDefaults.buttonColors().containerColor
                                 )
@@ -187,17 +175,17 @@ fun Add() {
                                     } ,// Close menu when clicked outside
                                     modifier = Modifier.background(color = TopAppBarBackground)
                                 ) {
-                                    val items = listOf("None", "Daily", "Weekly", "Monthly", "Yearly") // Dropdown items", "Option 3") // Dropdown items
-                                    items.forEach { item ->
+                                     // Dropdown items", "Option 3") // Dropdown items
+                                    recurrences.forEach { recurrence ->
                                         DropdownMenuItem(
                                             text = {
                                                 Row(verticalAlignment = Alignment.CenterVertically) {
                                                     Surface(modifier = Modifier.size(14.dp), shape = CircleShape, color = Color.Blue) {  }
-                                                    Text(text = item, modifier = Modifier.padding(start = 8.dp))
+                                                    Text(text = recurrence.name, modifier = Modifier.padding(start = 8.dp))
                                                 }
                                             },
                                             onClick = {
-                                                recurrenceItem = item // Update selected item
+                                                addViewModel.setRecurrence(recurrence) // Update selected item
                                                 expanded = false // Close the menu
                                             },
                                             contentPadding = PaddingValues(horizontal = 8.dp)
@@ -216,22 +204,43 @@ fun Add() {
                         label = "Date",
                         content = {
 
+                            var datePickerShowing by remember {
+                                mutableStateOf(false)
+                            }
+
                             Row(
                                 modifier = Modifier
-                                    .clickable { mDatePicker.show() }, // Make Row clickable
+                                    .clickable { datePickerShowing = !datePickerShowing }, // Make Row clickable
                                 verticalAlignment = Alignment.CenterVertically // Align Text and Icon
                             ){
-                                Text(
-                                    text = dateResult,
-                                    color = ButtonDefaults.buttonColors().containerColor
-                                )
-                                Icon(
-                                    imageVector = Icons.Default.DateRange,
-                                    contentDescription = "Date Icon",
-                                    tint = ButtonDefaults.buttonColors().containerColor,
-                                    modifier = Modifier.padding(start = 4.dp).size(20.dp)
-                                )
+                                if(state.date.isNotEmpty()){
+                                    Text(
+                                        text = state.date,
+                                        color = ButtonDefaults.buttonColors().containerColor
+                                    )
+                                }
+                                else{
+                                    Icon(
+                                        imageVector = Icons.Default.DateRange,
+                                        contentDescription = "Date Icon",
+                                        tint = ButtonDefaults.buttonColors().containerColor,
+                                        modifier = Modifier
+                                            .padding(start = 4.dp)
+                                            .size(20.dp)
+                                    )
+                                }
+                                if(datePickerShowing){
+                                    DatePickerDialog(
+                                        onDismissRequest = { datePickerShowing = false },
+                                        onDateChange = { date ->
+                                            addViewModel.setDate(date)
+                                            datePickerShowing = false
+                                        },
+                                        initialDate = LocalDate.parse(state.date, DateTimeFormatter.ofPattern("dd MMM yyyy"))
+                                    )
+                                }
                             }
+
 
                         }
                     )
@@ -244,12 +253,12 @@ fun Add() {
                         label = "Notes",
                         content = {
                             BasicTextField(
-                                value = noteState,
+                                value = state.notes,
                                 onValueChange = { newValue ->
-                                    noteState = newValue
+                                    addViewModel.setNote(newValue)
                                 },
                                 decorationBox = { innerTextField ->
-                                    if (textState.isEmpty()) {
+                                    if (state.notes.isEmpty()) {
                                         // Placeholder text
                                         Text(
                                             text = "Leave some notes...",
@@ -281,7 +290,6 @@ fun Add() {
                         content = {
 
                             var expanded by remember { mutableStateOf(false) } // Track DropdownMenu state
-                            var categoryItem by remember { mutableStateOf("Grocery") } // Track selected item // Track selected item
 
                             Row(
                                 modifier = Modifier
@@ -290,7 +298,7 @@ fun Add() {
                             ) {
                                 // Display the selected text
                                 Text(
-                                    text = categoryItem,
+                                    text = state.category ?: "Select Category",
                                     style = Typography.bodyMedium,
                                     color = ButtonDefaults.buttonColors().containerColor
                                 )
@@ -312,16 +320,16 @@ fun Add() {
                                     modifier = Modifier.background(color = TopAppBarBackground)
                                 ) {
                                     val items = listOf("Grocery", "Bills", "Entertainment", "Other", "Hobbies", "Takeout") // Dropdown items", "Option 3") // Dropdown items
-                                    items.forEach { item ->
+                                    items.forEach { category ->
                                         DropdownMenuItem(
                                             text = {
                                                 Row(verticalAlignment = Alignment.CenterVertically){
                                                     Surface(modifier = Modifier.size(10.dp), shape = CircleShape, color = Color.Blue) {  }
-                                                    Text(text = item, style = Typography.bodyMedium, modifier = Modifier.padding(start = 8.dp))
+                                                    Text(text = category, style = Typography.bodyMedium, modifier = Modifier.padding(start = 8.dp))
                                                 }
                                             },
                                             onClick = {
-                                                categoryItem = item // Update selected item
+                                                addViewModel.setCategory(category) // Update selected item
                                                 expanded = false // Close the menu
                                             })
                                     }
@@ -347,6 +355,8 @@ fun Add() {
         }
     )
 }
+
+
 
 
 @Preview
