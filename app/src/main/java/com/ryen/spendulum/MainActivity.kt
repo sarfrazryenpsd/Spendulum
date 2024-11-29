@@ -22,6 +22,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.ryen.spendulum.screens.Add
+import com.ryen.spendulum.screens.Categories
 import com.ryen.spendulum.screens.Expenses
 import com.ryen.spendulum.screens.Settings
 import com.ryen.spendulum.ui.theme.SpendulumTheme
@@ -115,10 +116,7 @@ class MainActivity : ComponentActivity() {
                                 Settings(navController)
                             }
                             composable("settings/categories") {
-                                Greeting(
-                                    name = "Categories",
-                                    modifier = Modifier.fillMaxSize()
-                                )
+                                Categories(navController = navController)
                             }
                         }
                     }

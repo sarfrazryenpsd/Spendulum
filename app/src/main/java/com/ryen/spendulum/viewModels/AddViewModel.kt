@@ -1,6 +1,7 @@
 package com.ryen.spendulum.viewModels
 
 import androidx.lifecycle.ViewModel
+import com.ryen.spendulum.models.AddState
 import com.ryen.spendulum.models.Recurrence
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -8,13 +9,7 @@ import kotlinx.coroutines.flow.update
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-data class AddState(
-    val amount: String = "",
-    val recurrence: Recurrence = Recurrence.None,
-    val date: String = LocalDate.now().format(DateTimeFormatter.ofPattern("dd MMM yyyy")),
-    val notes: String = "",
-    val category: String? = null
-)
+
 
 class AddViewModel: ViewModel() {
     private val _state = MutableStateFlow(AddState())
@@ -47,3 +42,4 @@ class AddViewModel: ViewModel() {
         }
     }
 }
+
