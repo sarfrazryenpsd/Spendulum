@@ -1,5 +1,6 @@
 package com.ryen.spendulum.viewModels
 
+import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import com.ryen.spendulum.models.CategoriesState

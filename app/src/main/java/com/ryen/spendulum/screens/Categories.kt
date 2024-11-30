@@ -2,30 +2,39 @@
 
 package com.ryen.spendulum.screens
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.rounded.Send
+import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MediumTopAppBar
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -63,6 +72,7 @@ fun Categories(
     val state by categoriesViewModel.uiState.collectAsState()
     val controller = rememberColorPickerController()
 
+
     Scaffold (
         topBar = {
             MediumTopAppBar(
@@ -85,7 +95,7 @@ fun Categories(
         },
         content = {innerPadding ->
             Column(
-                modifier = modifier.padding(innerPadding)
+                modifier = modifier.padding(innerPadding).verticalScroll(rememberScrollState())
             ) {
                 Column(
                     modifier = Modifier
@@ -134,16 +144,194 @@ fun Categories(
                         label = "Utils"
 
                     )
+                    HorizontalDivider(
+                        color = Divider,
+                        thickness = 1.dp,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+                    TableRow(
+                        label = "Utils"
+
+                    )
+                    HorizontalDivider(
+                        color = Divider,
+                        thickness = 1.dp,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+                    TableRow(
+                        label = "Utils"
+
+                    )
+                    HorizontalDivider(
+                        color = Divider,
+                        thickness = 1.dp,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+                    TableRow(
+                        label = "Utils"
+
+                    )
+                    HorizontalDivider(
+                        color = Divider,
+                        thickness = 1.dp,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+                    TableRow(
+                        label = "Utils"
+
+                    )
+                    HorizontalDivider(
+                        color = Divider,
+                        thickness = 1.dp,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+                    TableRow(
+                        label = "Utils"
+
+                    )
+                    HorizontalDivider(
+                        color = Divider,
+                        thickness = 1.dp,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+                    TableRow(
+                        label = "Utils"
+
+                    )
+                    HorizontalDivider(
+                        color = Divider,
+                        thickness = 1.dp,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+                    TableRow(
+                        label = "Utils"
+
+                    )
+                    HorizontalDivider(
+                        color = Divider,
+                        thickness = 1.dp,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+                    TableRow(
+                        label = "Utils"
+
+                    )
+                    HorizontalDivider(
+                        color = Divider,
+                        thickness = 1.dp,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+                    TableRow(
+                        label = "Utils"
+
+                    )
+                    HorizontalDivider(
+                        color = Divider,
+                        thickness = 1.dp,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+                    TableRow(
+                        label = "Utils"
+
+                    )
+                    HorizontalDivider(
+                        color = Divider,
+                        thickness = 1.dp,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+                    TableRow(
+                        label = "Utils"
+
+                    )
+                    HorizontalDivider(
+                        color = Divider,
+                        thickness = 1.dp,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+                    TableRow(
+                        label = "Utils"
+
+                    )
+                    HorizontalDivider(
+                        color = Divider,
+                        thickness = 1.dp,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+                    TableRow(
+                        label = "Utils"
+
+                    )
+                    HorizontalDivider(
+                        color = Divider,
+                        thickness = 1.dp,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+                    TableRow(
+                        label = "Utils"
+
+                    )
+                    HorizontalDivider(
+                        color = Divider,
+                        thickness = 1.dp,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+                    TableRow(
+                        label = "Utils"
+
+                    )
+                    HorizontalDivider(
+                        color = Divider,
+                        thickness = 1.dp,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+                    TableRow(
+                        label = "Utils"
+
+                    )
+                    HorizontalDivider(
+                        color = Divider,
+                        thickness = 1.dp,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+                    TableRow(
+                        label = "Utils"
+
+                    )
+                    HorizontalDivider(
+                        color = Divider,
+                        thickness = 1.dp,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+                    TableRow(
+                        label = "Utils"
+
+                    )
+                    HorizontalDivider(
+                        color = Divider,
+                        thickness = 1.dp,
+                        modifier = Modifier.padding(horizontal = 8.dp)
+                    )
+                    TableRow(
+                        label = "Utils"
+
+                    )
+
                 }
             }
             Column (
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
+                    .fillMaxHeight(),
                 verticalArrangement = Arrangement.Bottom,
-                horizontalAlignment = Alignment.Start
             ){
-                Row {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(12.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(TopAppBarBackground)
+                        .height(44.dp)
+                        .padding(vertical = 6.dp, horizontal = 16.dp)
+                ) {
                     if (state.colorPickerShowing) {
                         Dialog(
                             onDismissRequest = categoriesViewModel::hideColorPicker,
@@ -173,7 +361,7 @@ fun Categories(
                                     Row(
                                         horizontalArrangement = Arrangement.Center,
                                         verticalAlignment = Alignment.CenterVertically
-                                    ){
+                                    ) {
                                         BrightnessSlider(
                                             modifier = Modifier
                                                 .weight(1f)
@@ -194,12 +382,15 @@ fun Categories(
                                             controller = controller
                                         )
                                     }
-                                    Row (
+                                    Row(
                                         horizontalArrangement = Arrangement.End,
-                                        modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp, end = 8.dp)
-                                    ){
-                                        TextButton (
-                                            onClick = {categoriesViewModel.hideColorPicker()}, shape = ButtonDefaults.filledTonalShape){
+                                        modifier = Modifier.fillMaxWidth()
+                                            .padding(bottom = 8.dp, end = 8.dp)
+                                    ) {
+                                        TextButton(
+                                            onClick = { categoriesViewModel.hideColorPicker() },
+                                            shape = ButtonDefaults.filledTonalShape
+                                        ) {
                                             Text(
                                                 text = "Done",
                                                 color = Primary,
@@ -211,14 +402,63 @@ fun Categories(
                             }
                         )
                     }
-
+                    // Color Picker Button (Surface)
                     Surface(
                         onClick = categoriesViewModel::showColorPicker,
                         shape = CircleShape,
                         color = state.categoryColor,
-                        modifier = Modifier.size(24.dp)
+                        border = BorderStroke(3.dp, Color.White),
+                        modifier = Modifier.size(24.dp) // Explicit size
                     ) { }
+
+                    // TextField
+                    TextField(
+                        value = state.categoryName,
+                        onValueChange = categoriesViewModel::setCategoryName,
+                        placeholder = {
+                            Text(
+                                text = "New Category",
+                                color = Color.White,
+                            )
+                        },
+                        shape = Shapes.medium,
+                        colors = TextFieldDefaults.colors(
+                            focusedContainerColor = BackGroundElevate,
+                            unfocusedContainerColor = BackGroundElevate,
+                            cursorColor = Primary,
+                        ),
+                        maxLines = 1,
+                        trailingIcon = {
+                            if (state.categoryName.isNotEmpty()) {
+                                IconButton(onClick = { /* Clear action */ }) {
+                                    Icon(
+                                        imageVector = Icons.Rounded.Close,
+                                        contentDescription = null,
+                                        modifier = Modifier.size(17.dp)
+                                    )
+                                }
+                            }
+                        },
+                        modifier = Modifier.weight(1f), // Make TextField fill the remaining space
+                    )
+
+                    // Icon Button (Send)
+                    Box(
+                        modifier = Modifier
+                            .size(48.dp) // Fixed size for the Box
+                            .background(color = Primary, shape = Shapes.large)
+                            .clickable { categoriesViewModel.createCategory() },
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Icon(
+                            imageVector = Icons.AutoMirrored.Rounded.Send,
+                            contentDescription = "Send",
+                            tint = Color.White,
+                            modifier = Modifier.size(24.dp) // Icon size
+                        )
+                    }
                 }
+
             }
         }
     )
