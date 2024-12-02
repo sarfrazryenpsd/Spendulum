@@ -26,6 +26,7 @@ fun TableRow(
     modifier: Modifier = Modifier,
     hasArrow: Boolean? = false,
     content: (@Composable RowScope.() -> Unit)? = null,
+    detailContent: (@Composable RowScope.() -> Unit)? = null,
     isDestructive: Boolean = false,
 ) {
 
@@ -35,9 +36,10 @@ fun TableRow(
         modifier = modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 10.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
+        horizontalArrangement = if (detailContent!=null)Arrangement.spacedBy(12.dp) else Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ){
+        if(detailContent != null) detailContent()
         Text(
             text = label,
             style = Typography.bodyMedium,

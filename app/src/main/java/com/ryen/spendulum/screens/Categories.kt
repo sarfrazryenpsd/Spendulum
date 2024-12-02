@@ -16,11 +16,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.rounded.Add
@@ -101,226 +101,45 @@ fun Categories(
             Column(
                 modifier = modifier
                     .padding(innerPadding)
-                    .verticalScroll(rememberScrollState())
+                    //.padding(bottom = 55.dp)
+                    //.verticalScroll(rememberScrollState())
             ) {
-                Column(
+                LazyColumn(
                     modifier = Modifier
-                        .padding(16.dp)
+                        .padding(start = 12.dp, end = 12.dp, top = 12.dp)
                         .fillMaxWidth()
                         .clip(Shapes.large)
                         .background(BackGroundElevate)
                 ) {
-                    TableRow(
-                        label = "Groceries"
-
-                    )
-                    HorizontalDivider(
-                        color = Divider,
-                        thickness = 1.dp,
-                        modifier = Modifier.padding(horizontal = 8.dp)
-                    )
-                    TableRow(
-                        label = "Entertainment"
-
-                    )
-                    HorizontalDivider(
-                        color = Divider,
-                        thickness = 1.dp,
-                        modifier = Modifier.padding(horizontal = 8.dp)
-                    )
-                    TableRow(
-                        label = "Electricity"
-
-                    )
-                    HorizontalDivider(
-                        color = Divider,
-                        thickness = 1.dp,
-                        modifier = Modifier.padding(horizontal = 8.dp)
-                    )
-                    TableRow(
-                        label = "Bills"
-
-                    )
-                    HorizontalDivider(
-                        color = Divider,
-                        thickness = 1.dp,
-                        modifier = Modifier.padding(horizontal = 8.dp)
-                    )
-                    TableRow(
-                        label = "Utils"
-
-                    )
-                    HorizontalDivider(
-                        color = Divider,
-                        thickness = 1.dp,
-                        modifier = Modifier.padding(horizontal = 8.dp)
-                    )
-                    TableRow(
-                        label = "Utils"
-
-                    )
-                    HorizontalDivider(
-                        color = Divider,
-                        thickness = 1.dp,
-                        modifier = Modifier.padding(horizontal = 8.dp)
-                    )
-                    TableRow(
-                        label = "Utils"
-
-                    )
-                    HorizontalDivider(
-                        color = Divider,
-                        thickness = 1.dp,
-                        modifier = Modifier.padding(horizontal = 8.dp)
-                    )
-                    TableRow(
-                        label = "Utils"
-
-                    )
-                    HorizontalDivider(
-                        color = Divider,
-                        thickness = 1.dp,
-                        modifier = Modifier.padding(horizontal = 8.dp)
-                    )
-                    TableRow(
-                        label = "Utils"
-
-                    )
-                    HorizontalDivider(
-                        color = Divider,
-                        thickness = 1.dp,
-                        modifier = Modifier.padding(horizontal = 8.dp)
-                    )
-                    TableRow(
-                        label = "Utils"
-
-                    )
-                    HorizontalDivider(
-                        color = Divider,
-                        thickness = 1.dp,
-                        modifier = Modifier.padding(horizontal = 8.dp)
-                    )
-                    TableRow(
-                        label = "Utils"
-
-                    )
-                    HorizontalDivider(
-                        color = Divider,
-                        thickness = 1.dp,
-                        modifier = Modifier.padding(horizontal = 8.dp)
-                    )
-                    TableRow(
-                        label = "Utils"
-
-                    )
-                    HorizontalDivider(
-                        color = Divider,
-                        thickness = 1.dp,
-                        modifier = Modifier.padding(horizontal = 8.dp)
-                    )
-                    TableRow(
-                        label = "Utils"
-
-                    )
-                    HorizontalDivider(
-                        color = Divider,
-                        thickness = 1.dp,
-                        modifier = Modifier.padding(horizontal = 8.dp)
-                    )
-                    TableRow(
-                        label = "Utils"
-
-                    )
-                    HorizontalDivider(
-                        color = Divider,
-                        thickness = 1.dp,
-                        modifier = Modifier.padding(horizontal = 8.dp)
-                    )
-                    TableRow(
-                        label = "Utils"
-
-                    )
-                    HorizontalDivider(
-                        color = Divider,
-                        thickness = 1.dp,
-                        modifier = Modifier.padding(horizontal = 8.dp)
-                    )
-                    TableRow(
-                        label = "Utils"
-
-                    )
-                    HorizontalDivider(
-                        color = Divider,
-                        thickness = 1.dp,
-                        modifier = Modifier.padding(horizontal = 8.dp)
-                    )
-                    TableRow(
-                        label = "Utils"
-
-                    )
-                    HorizontalDivider(
-                        color = Divider,
-                        thickness = 1.dp,
-                        modifier = Modifier.padding(horizontal = 8.dp)
-                    )
-                    TableRow(
-                        label = "Utils"
-
-                    )
-                    HorizontalDivider(
-                        color = Divider,
-                        thickness = 1.dp,
-                        modifier = Modifier.padding(horizontal = 8.dp)
-                    )
-                    TableRow(
-                        label = "Utils"
-
-                    )
-                    HorizontalDivider(
-                        color = Divider,
-                        thickness = 1.dp,
-                        modifier = Modifier.padding(horizontal = 8.dp)
-                    )
-                    TableRow(
-                        label = "Utils"
-
-                    )
-                    HorizontalDivider(
-                        color = Divider,
-                        thickness = 1.dp,
-                        modifier = Modifier.padding(horizontal = 8.dp)
-                    )
-                    TableRow(
-                        label = "Utils"
-
-                    )
-                    HorizontalDivider(
-                        color = Divider,
-                        thickness = 1.dp,
-                        modifier = Modifier.padding(horizontal = 8.dp)
-                    )
-                    TableRow(
-                        label = "Utils"
-
-                    )
-                    HorizontalDivider(
-                        color = Divider,
-                        thickness = 1.dp,
-                        modifier = Modifier.padding(horizontal = 8.dp)
-                    )
-                    TableRow(
-                        label = "Utils"
-
-                    )
-                    HorizontalDivider(
-                        color = Divider,
-                        thickness = 1.dp,
-                        modifier = Modifier.padding(horizontal = 8.dp)
-                    )
-                    TableRow(
-                        label = "Utils"
-
-                    )
+                    itemsIndexed(state.categories){ index,category ->
+                        TableRow(
+                            detailContent = {
+                                Surface(
+                                    onClick = categoriesViewModel::showColorPicker,
+                                    shape = CircleShape,
+                                    color = category.color,
+                                    border = BorderStroke(2.dp, Color.White),
+                                    modifier = Modifier.size(16.dp) // Explicit size
+                                ) { }
+                            },
+                            label = category.name
+                        )
+                        if(index < state.categories.size - 1){
+                            HorizontalDivider(
+                                color = Divider,
+                                thickness = 1.dp,
+                                modifier = Modifier.padding(horizontal = 8.dp)
+                            )
+                        }
+                    }
+                    item {
+                        if(state.categories.size > 15){
+                            TableRow(
+                                label = "",
+                                modifier = Modifier.height(70.dp)
+                            )
+                        }
+                    }
 
                 }
             }
@@ -334,7 +153,7 @@ fun Categories(
                     horizontalArrangement = Arrangement.spacedBy(12.dp),
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(TopAppBarBackground)
+                        .background(Color.Transparent)
                         //.height(44.dp)
                         .padding(vertical = 6.dp, horizontal = 10.dp)
                 ) {
@@ -425,7 +244,8 @@ fun Categories(
                             .weight(1f)
                             .height(44.dp)
                             .clip(Shapes.medium)
-                            .background(Color.Black),
+                            .background(Color.Black)
+                            .border(1.dp, Color.White.copy(alpha = 0.2f), Shapes.medium),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ){
@@ -438,7 +258,9 @@ fun Categories(
                             decorationBox = { innerTextField ->
                                 Row(
                                     verticalAlignment = Alignment.CenterVertically,
-                                    modifier = Modifier.fillMaxWidth().weight(1f)
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .weight(1f)
                                 ) {
                                     if (state.categoryName.isEmpty()) {
                                         // Placeholder text
@@ -468,7 +290,7 @@ fun Categories(
                                 modifier = Modifier.size(44.dp),
                                 contentAlignment = Alignment.CenterEnd,
                             ) {
-                                IconButton(onClick = {}) {
+                                IconButton(onClick = {categoriesViewModel.setCategoryName("")}) {
                                     Icon(
                                         painter = painterResource(R.drawable.cancel),
                                         contentDescription = null,

@@ -17,12 +17,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.ryen.spendulum.components.TableRow
 import com.ryen.spendulum.ui.theme.BackGroundElevate
 import com.ryen.spendulum.ui.theme.Divider
 import com.ryen.spendulum.ui.theme.Shapes
+import com.ryen.spendulum.ui.theme.SpendulumTheme
 import com.ryen.spendulum.ui.theme.TopAppBarBackground
 import com.ryen.spendulum.ui.theme.Typography
 
@@ -41,10 +44,10 @@ fun Settings(navController: NavController) {
             ) {
                 Column(
                     modifier = Modifier
-                    .padding(8.dp)
-                    .fillMaxWidth()
-                    .clip(Shapes.large)
-                    .background(BackGroundElevate)
+                        .padding(8.dp)
+                        .fillMaxWidth()
+                        .clip(Shapes.large)
+                        .background(BackGroundElevate)
                 ) {
                     TableRow(
                         label = "Categories",
@@ -65,4 +68,12 @@ fun Settings(navController: NavController) {
             }
         }
     )
+}
+
+@Preview
+@Composable
+private fun SettingsPrev() {
+    SpendulumTheme {
+        Settings(navController = rememberNavController())
+    }
 }

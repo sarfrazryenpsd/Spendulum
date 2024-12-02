@@ -1,9 +1,10 @@
 package com.ryen.spendulum.viewModels
 
-import androidx.compose.foundation.text.input.TextFieldState
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import com.ryen.spendulum.models.CategoriesState
+import com.ryen.spendulum.models.Category
+import com.ryen.spendulum.ui.theme.Primary
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -34,6 +35,20 @@ class CategoriesViewModel: ViewModel(){
     }
 
     fun createCategory() {
-        // TODO:
+        val newCategoryList = mutableListOf(
+            Category(
+            _uiState.value.categoryName,
+                _uiState.value.categoryColor
+            )
+        )
+        newCategoryList.addAll(_uiState.value.categories)
+
+        _uiState.update {
+            it.copy(
+                categories = newCategoryList,
+                categoryName = "",
+                categoryColor = Primary,
+            )
+        }
     }
 }
