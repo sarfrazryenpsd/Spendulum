@@ -51,4 +51,14 @@ class CategoriesViewModel: ViewModel(){
             )
         }
     }
+
+    fun deleteCategory(category: Category){
+        val newCategoryList = _uiState.value.categories.toMutableList()
+        newCategoryList.remove(category)
+        _uiState.update {
+            it.copy(
+                categories = newCategoryList
+            )
+        }
+    }
 }

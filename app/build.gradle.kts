@@ -52,6 +52,7 @@ dependencies {
     implementation(libs.androidx.material3.datePicker)
     implementation(libs.androidx.navigation.compose)
     implementation(libs.compose.colorpicker)
+    implementation(libs.swipe)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

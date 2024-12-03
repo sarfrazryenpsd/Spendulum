@@ -59,6 +59,7 @@ import com.github.skydoves.colorpicker.compose.rememberColorPickerController
 import com.ryen.spendulum.R
 import com.ryen.spendulum.components.TableRow
 import com.ryen.spendulum.ui.theme.BackGroundElevate
+import com.ryen.spendulum.ui.theme.Destructive
 import com.ryen.spendulum.ui.theme.Divider
 import com.ryen.spendulum.ui.theme.Primary
 import com.ryen.spendulum.ui.theme.Shapes
@@ -66,6 +67,8 @@ import com.ryen.spendulum.ui.theme.SpendulumTheme
 import com.ryen.spendulum.ui.theme.TopAppBarBackground
 import com.ryen.spendulum.ui.theme.Typography
 import com.ryen.spendulum.viewModels.CategoriesViewModel
+import me.saket.swipe.SwipeAction
+import me.saket.swipe.SwipeableActionsBox
 
 @Composable
 fun Categories(
@@ -109,27 +112,45 @@ fun Categories(
                         .padding(start = 12.dp, end = 12.dp, top = 12.dp)
                         .fillMaxWidth()
                         .clip(Shapes.large)
-                        .background(BackGroundElevate)
+                        //.background(BackGroundElevate)
                 ) {
-                    itemsIndexed(state.categories){ index,category ->
-                        TableRow(
-                            detailContent = {
-                                Surface(
-                                    onClick = categoriesViewModel::showColorPicker,
-                                    shape = CircleShape,
-                                    color = category.color,
-                                    border = BorderStroke(2.dp, Color.White),
-                                    modifier = Modifier.size(16.dp) // Explicit size
-                                ) { }
-                            },
-                            label = category.name
-                        )
-                        if(index < state.categories.size - 1){
-                            HorizontalDivider(
-                                color = Divider,
-                                thickness = 1.dp,
-                                modifier = Modifier.padding(horizontal = 8.dp)
+                    itemsIndexed(
+                        state.categories
+
+                    ){ index,category ->
+                        SwipeableActionsBox(
+                            endActions = listOf(
+                                SwipeAction(
+                                    icon = painterResource(R.drawable.baseline_delete_white_36),
+                                    background = Destructive,
+                                    onSwipe = { categoriesViewModel.deleteCategory(category) },
+                                    isUndo = true
+                                ),
+                            ),
+                            modifier = Modifier.animateItem()
+                        ){
+                            TableRow(
+                                modifier = Modifier.background(BackGroundElevate),
+                                detailContent = {
+                                    Surface(
+                                        onClick = categoriesViewModel::showColorPicker,
+                                        shape = CircleShape,
+                                        color = category.color,
+                                        border = BorderStroke(2.dp, Color.White),
+                                        modifier = Modifier.size(16.dp) // Explicit size
+                                    ) { }
+                                },
+                                label = category.name
                             )
+                            if (index < state.categories.size || index == 0) {
+                                Row(modifier = Modifier.background(BackGroundElevate).height(1.dp)){
+                                    HorizontalDivider(
+                                        color = Divider,
+                                        thickness = 1.2.dp,
+                                        modifier = Modifier.padding(horizontal = 8.dp)
+                                    )
+                                }
+                            }
                         }
                     }
                     item {
@@ -145,7 +166,8 @@ fun Categories(
             }
             Column (
                 modifier = Modifier
-                    .fillMaxHeight(),
+                    .fillMaxHeight()
+                    .padding(bottom = 12.dp),
                 verticalArrangement = Arrangement.Bottom,
             ){
                 Row(
@@ -154,7 +176,6 @@ fun Categories(
                     modifier = Modifier
                         .fillMaxWidth()
                         .background(Color.Transparent)
-                        //.height(44.dp)
                         .padding(vertical = 6.dp, horizontal = 10.dp)
                 ) {
                     if (state.colorPickerShowing) {
@@ -245,14 +266,14 @@ fun Categories(
                             .height(44.dp)
                             .clip(Shapes.medium)
                             .background(Color.Black)
-                            .border(1.dp, Color.White.copy(alpha = 0.2f), Shapes.medium),
+                            .border(1.2.dp, Color.White.copy(alpha = 0.5f), Shapes.medium),
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ){
                         BasicTextField(
                             value = state.categoryName,
                             onValueChange = { newValue ->
-                                categoriesViewModel.setCategoryName(newValue)
+                                 categoriesViewModel.setCategoryName(newValue)
                             },
 
                             decorationBox = { innerTextField ->
@@ -301,20 +322,26 @@ fun Categories(
                         }
                     }
 
-                    // Icon Button (Send)
-                    Box(
-                        modifier = Modifier
-                            .size(48.dp) // Fixed size for the Box
-                            .background(color = Primary, shape = Shapes.large)
-                            .clickable { categoriesViewModel.createCategory() },
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Icon(
-                            imageVector = Icons.Rounded.Add,
-                            contentDescription = "Send",
-                            tint = Color.White,
-                            modifier = Modifier.size(28.dp) // Icon size
-                        )
+                    // Icon Button (Add)
+                    AnimatedVisibility(visible = state.categoryName.isNotEmpty()){
+                        Box(
+                            modifier = Modifier
+                                .size(48.dp) // Fixed size for the Box
+                                .background(color = Primary, shape = Shapes.large)
+                                .clickable {
+                                    if (state.categoryName.isNotEmpty()) {
+                                        categoriesViewModel.createCategory()
+                                    }
+                                },
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                imageVector = Icons.Rounded.Add,
+                                contentDescription = "Send",
+                                tint = Color.White,
+                                modifier = Modifier.size(28.dp) // Icon size
+                            )
+                        }
                     }
                 }
 
