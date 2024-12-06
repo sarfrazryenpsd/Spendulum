@@ -116,7 +116,7 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.padding(paddingValues)
                         ){
                             composable("expenses") {
-                                Expenses(navController)
+                                Expenses()
                             }
                             composable("reports") {
                                 Greeting(

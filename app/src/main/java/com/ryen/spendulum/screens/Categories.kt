@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
 
 package com.ryen.spendulum.screens
 
@@ -104,8 +104,6 @@ fun Categories(
             Column(
                 modifier = modifier
                     .padding(innerPadding)
-                    //.padding(bottom = 55.dp)
-                    //.verticalScroll(rememberScrollState())
             ) {
                 LazyColumn(
                     modifier = Modifier

@@ -28,7 +28,7 @@ val Typography = Typography(
         fontWeight = FontWeight.Normal,
         fontSize = 17.sp,
         lineHeight = 22.sp,
-        letterSpacing = -0.41.sp
+        letterSpacing = (-0.41).sp
     ),
     titleMedium = TextStyle(
         fontFamily = FontFamily.Default,
@@ -42,14 +42,14 @@ val Typography = Typography(
         fontWeight = FontWeight.SemiBold,
         fontSize = 17.sp,
         lineHeight = 22.sp,
-        letterSpacing = -0.41.sp
+        letterSpacing = (-0.41).sp
     ),
     labelMedium = TextStyle(
         fontFamily = FontFamily.Default,
         fontWeight = FontWeight.Normal,
         fontSize = 13.sp,
         lineHeight = 18.sp,
-        letterSpacing = -0.08.sp
+        letterSpacing = (-0.08).sp
     ),
     titleSmall = TextStyle(
         fontFamily = FontFamily.Default,
@@ -63,7 +63,7 @@ val Typography = Typography(
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 21.sp,
-        letterSpacing = -0.32.sp
+        letterSpacing = (-0.32).sp
     )
     /* Other default text styles to override
 
