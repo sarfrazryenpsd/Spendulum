@@ -53,7 +53,6 @@ import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.github.skydoves.colorpicker.compose.AlphaTile
-import com.github.skydoves.colorpicker.compose.BrightnessSlider
 import com.github.skydoves.colorpicker.compose.HsvColorPicker
 import com.github.skydoves.colorpicker.compose.rememberColorPickerController
 import com.ryen.spendulum.R
@@ -206,23 +205,19 @@ fun Categories(
                                         horizontalArrangement = Arrangement.Center,
                                         verticalAlignment = Alignment.CenterVertically
                                     ) {
-                                        BrightnessSlider(
+                                        /*BrightnessSlider(
                                             modifier = Modifier
                                                 .weight(1f)
                                                 .padding(10.dp)
                                                 .height(35.dp),
                                             controller = controller,
-                                        )
+                                        )*/
                                         AlphaTile(
                                             modifier = Modifier
+                                                .fillMaxWidth()
                                                 .padding(10.dp)
-                                                .clip(CircleShape)
-                                                .border(
-                                                    width = 3.dp,
-                                                    color = Color.White,
-                                                    shape = CircleShape
-                                                )
-                                                .size(45.dp),
+                                                .clip(RoundedCornerShape(8.dp))
+                                                .height(45.dp),
                                             controller = controller
                                         )
                                     }

@@ -9,11 +9,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.ryen.spendulum.models.Expense
-import com.ryen.spendulum.models.groupByDay
+import com.ryen.spendulum.models.groupedByDay
 
 @Composable
 fun ExpensesList(expenses: List<Expense>) {
-    val groupedExpenses = expenses.groupByDay()
+    val groupedExpenses = expenses.groupedByDay()
 
     LazyColumn {
         if (groupedExpenses.isEmpty()) {

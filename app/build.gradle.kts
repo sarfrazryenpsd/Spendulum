@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.compose.colorpicker)
     implementation(libs.swipe)
     implementation(libs.faker)
+    implementation(libs.charty)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

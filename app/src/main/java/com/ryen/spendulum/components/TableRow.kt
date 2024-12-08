@@ -1,6 +1,5 @@
 package com.ryen.spendulum.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
@@ -16,7 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.ryen.spendulum.ui.theme.BackGroundElevate
 import com.ryen.spendulum.ui.theme.Destructive
 import com.ryen.spendulum.ui.theme.SpendulumTheme
 import com.ryen.spendulum.ui.theme.TextPrimary

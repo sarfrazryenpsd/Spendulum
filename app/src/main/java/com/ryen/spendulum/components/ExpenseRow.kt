@@ -36,12 +36,12 @@ fun ExpenseRow(expense: Expense) {
             Box(
                 modifier = Modifier
                     .clip(Shapes.medium)
-                    .background(expense.category.color.copy(alpha = 0.4f))
+                    .background(expense.category.color.copy(alpha = 0.25f))
             ){
                 Text(
                     text = expense.category.name,
                     style = Typography.labelMedium,
-                    color = expense.category.color.copy(alpha = 1.5f),
+                    color = expense.category.color,
                     modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
                 )
             }
