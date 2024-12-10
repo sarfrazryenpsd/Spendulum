@@ -21,10 +21,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.ryen.spendulum.components.ExpensesList
+import com.ryen.spendulum.components.charts.MonthlyChart
 import com.ryen.spendulum.components.charts.WeeklyChart
+import com.ryen.spendulum.components.charts.YearlyChart
 import com.ryen.spendulum.mock.mockExpenses
 import com.ryen.spendulum.ui.theme.TopAppBarBackground
 import com.ryen.spendulum.ui.theme.Typography
+import java.time.LocalDate
 
 @Composable
 fun Reports() {
@@ -63,7 +66,7 @@ fun Reports() {
                     }
                 }
                 Spacer(modifier = Modifier.height(16.dp))
-                WeeklyChart(expenses = mockExpenses)
+                YearlyChart(expenses = mockExpenses)
                 Spacer(modifier = Modifier.height(16.dp))
                 ExpensesList(expenses = mockExpenses)
             }

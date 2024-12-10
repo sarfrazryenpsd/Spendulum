@@ -11,7 +11,9 @@ import com.github.tehras.charts.bar.BarChart
 import com.github.tehras.charts.bar.BarChartData
 import com.github.tehras.charts.bar.renderer.yaxis.SimpleYAxisDrawer
 import com.ryen.spendulum.models.Expense
+import com.ryen.spendulum.models.Recurrence
 import com.ryen.spendulum.models.groupedByDayOfWeek
+import com.ryen.spendulum.models.numFormatter
 import com.ryen.spendulum.ui.theme.LabelSecondary
 import com.ryen.spendulum.ui.theme.Typography
 import java.time.DayOfWeek
@@ -62,13 +64,13 @@ fun WeeklyChart(expenses: List<Expense>) {
             padBy = 8f
         ),
         modifier = Modifier.height(147.dp).fillMaxWidth().padding(vertical = 16.dp),
-        labelDrawer = LabelDrawer(),
+        labelDrawer = LabelDrawer(recurrence = Recurrence.Weekly),
         yAxisDrawer = SimpleYAxisDrawer(
             labelTextColor = LabelSecondary,
-            labelValueFormatter = { value -> value.toInt().toString() },
+            labelValueFormatter = { value -> value.numFormatter() },
             labelRatio = 3,
             labelTextSize = Typography.bodySmall.fontSize
         ),
-        barDrawer = BarDrawer()
+        barDrawer = BarDrawer(recurrence = Recurrence.Weekly)
     )
 }
