@@ -45,7 +45,7 @@ fun ExpenseRow(expense: Expense) {
                     modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
                 )
             }
-            Text(text = expense.date.formatTime(), color = LabelSecondary, style = Typography.bodyMedium)
+            Text(text = expense.date.formatTime(), color = LabelSecondary, style = Typography.bodySmall)
         }
     }
 }

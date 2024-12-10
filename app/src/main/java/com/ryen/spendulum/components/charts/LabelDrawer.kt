@@ -33,6 +33,7 @@ class LabelDrawer (val recurrence: Recurrence): LabelDrawer {
         this.textAlign = android.graphics.Paint.Align.CENTER
         this.color = LabelSecondary.toLegacyInt()
         this.textSize = tSize
+        this.isAntiAlias = true
     }
     override fun drawLabel(
         drawScope: DrawScope,

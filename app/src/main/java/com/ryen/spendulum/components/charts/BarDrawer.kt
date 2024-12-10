@@ -17,7 +17,7 @@ class BarDrawer constructor(recurrence: Recurrence) : BarDrawer{
     private val rightOffset = when(recurrence){
         Recurrence.Weekly -> 30f
         Recurrence.Monthly -> 6f
-        Recurrence.Yearly -> 24f
+        Recurrence.Yearly -> 18f
         else -> 0f
     }
 
