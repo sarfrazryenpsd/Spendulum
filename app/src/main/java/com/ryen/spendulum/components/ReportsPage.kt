@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -18,21 +20,25 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ryen.spendulum.components.charts.MonthlyChart
 import com.ryen.spendulum.components.charts.WeeklyChart
 import com.ryen.spendulum.components.charts.YearlyChart
-import com.ryen.spendulum.mock.mockExpenses
 import com.ryen.spendulum.models.Recurrence
+import com.ryen.spendulum.models.numFormatter
 import com.ryen.spendulum.ui.theme.Typography
 import com.ryen.spendulum.viewModels.ReportViewModel
 import com.ryen.spendulum.viewModels.viewModelFactory
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun ReportsPage(
     recurrence: Recurrence,
     page: Int,
-    vm: ReportViewModel = viewModel(factory = viewModelFactory {
+    vm: ReportViewModel = viewModel(
+        key = "$page-${recurrence.name}", factory = viewModelFactory {
         ReportViewModel(page, recurrence)
     })
 ) {
+    val state by vm.uiState.collectAsState()
+    val formatter = DateTimeFormatter.ofPattern("dd MMM")
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -44,7 +50,8 @@ fun ReportsPage(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Column {
-                Text(text = "12 Sep - 18 Sep", style = Typography.titleSmall)
+
+                Text(text = "${state.dateStart.format(formatter)} - ${state.dateEnd.format(formatter)}", style = Typography.titleSmall)
                 Spacer(modifier = Modifier.height(8.dp))
                 Row {
                     Text(
@@ -52,7 +59,7 @@ fun ReportsPage(
                         color = Color.White.copy(alpha = 0.6f),
                         style = Typography.bodySmall
                     )
-                    Text("85,000", style = Typography.headlineSmall)
+                    Text(state.totalInRange.toFloat().numFormatter(), style = Typography.headlineSmall)
                 }
 
             }
@@ -65,18 +72,18 @@ fun ReportsPage(
                         color = Color.White.copy(alpha = 0.6f),
                         style = Typography.bodySmall
                     )
-                    Text("85,000", style = Typography.headlineSmall)
+                    Text(state.avgPerDay.toFloat().numFormatter(), style = Typography.headlineSmall)
                 }
             }
         }
         Spacer(modifier = Modifier.height(16.dp))
         when (recurrence) {
-            Recurrence.Weekly -> WeeklyChart(expenses = mockExpenses)
-            Recurrence.Monthly -> MonthlyChart(expenses = mockExpenses, LocalDate.now())
-            Recurrence.Yearly -> YearlyChart(expenses = mockExpenses)
+            Recurrence.Weekly -> WeeklyChart(expenses = state.expense)
+            Recurrence.Monthly -> MonthlyChart(expenses = state.expense, LocalDate.now())
+            Recurrence.Yearly -> YearlyChart(expenses = state.expense)
             else -> {}
         }
         Spacer(modifier = Modifier.height(16.dp))
-        ExpensesList(expenses = mockExpenses)
+        ExpensesList(expenses = state.expense)
     }
 }
