@@ -30,6 +30,7 @@ import com.ryen.spendulum.screens.Reports
 import com.ryen.spendulum.screens.Settings
 import com.ryen.spendulum.ui.theme.SpendulumTheme
 import com.ryen.spendulum.ui.theme.TopAppBarBackground
+import io.sentry.compose.withSentryObservableEffect
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +40,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             SpendulumTheme {
                 var showBottomBar by rememberSaveable { mutableStateOf(true) }
-                val navController = rememberNavController()
+                val navController = rememberNavController().withSentryObservableEffect()
                 val backStackEntry = navController.currentBackStackEntryAsState()
 
                 showBottomBar = backStackEntry.value?.destination?.route != "settings/categories"
