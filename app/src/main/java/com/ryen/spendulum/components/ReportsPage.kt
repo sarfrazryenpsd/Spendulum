@@ -23,7 +23,7 @@ import com.ryen.spendulum.components.charts.YearlyChart
 import com.ryen.spendulum.models.Recurrence
 import com.ryen.spendulum.models.numFormatter
 import com.ryen.spendulum.ui.theme.Typography
-import com.ryen.spendulum.viewModels.ReportViewModel
+import com.ryen.spendulum.viewModels.ReportPageViewModel
 import com.ryen.spendulum.viewModels.viewModelFactory
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -32,9 +32,9 @@ import java.time.format.DateTimeFormatter
 fun ReportsPage(
     recurrence: Recurrence,
     page: Int,
-    vm: ReportViewModel = viewModel(
+    vm: ReportPageViewModel = viewModel(
         key = "$page-${recurrence.name}", factory = viewModelFactory {
-        ReportViewModel(page, recurrence)
+        ReportPageViewModel(page, recurrence)
     })
 ) {
     val state by vm.uiState.collectAsState()
@@ -78,6 +78,7 @@ fun ReportsPage(
         }
         Spacer(modifier = Modifier.height(16.dp))
         when (recurrence) {
+            Recurrence.Daily -> WeeklyChart(expenses = state.expense)
             Recurrence.Weekly -> WeeklyChart(expenses = state.expense)
             Recurrence.Monthly -> MonthlyChart(expenses = state.expense, LocalDate.now())
             Recurrence.Yearly -> YearlyChart(expenses = state.expense)

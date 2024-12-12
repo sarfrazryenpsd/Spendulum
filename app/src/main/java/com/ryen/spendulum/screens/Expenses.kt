@@ -39,6 +39,7 @@ import com.ryen.spendulum.R
 import com.ryen.spendulum.components.ExpensesList
 import com.ryen.spendulum.mock.mockExpenses
 import com.ryen.spendulum.models.Recurrence
+import com.ryen.spendulum.models.formatToTwoDecimalPlaces
 import com.ryen.spendulum.ui.theme.BackGroundElevate
 import com.ryen.spendulum.ui.theme.LabelSecondary
 import com.ryen.spendulum.ui.theme.SpendulumTheme
@@ -145,12 +146,12 @@ fun Expenses(expenseViewModel: ExpenseViewModel = ExpenseViewModel()) {
                         tint = Color.White.copy(alpha = 0.6f)
                     )
                     Text(
-                        text = "${state.sumTotal}",
+                        text = state.sumTotal.formatToTwoDecimalPlaces(),
                         style = Typography.titleLarge.copy(fontWeight = FontWeight.Normal),
                         minLines = 1
                     )
                 }
-                ExpensesList(expenses = mockExpenses)
+                ExpensesList(expenses = state.expenses)
             }
         }
     )
