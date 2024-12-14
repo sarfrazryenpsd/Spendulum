@@ -1,11 +1,15 @@
 package com.ryen.spendulum.viewModels
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.ryen.spendulum.data.entity.Category
 import com.ryen.spendulum.models.AddState
 import com.ryen.spendulum.models.Recurrence
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -14,6 +18,12 @@ import java.time.format.DateTimeFormatter
 class AddViewModel: ViewModel() {
     private val _state = MutableStateFlow(AddState())
     val state = _state.asStateFlow()
+
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
+
+        }
+    }
 
     fun setAmount(amount: String) {
         _state.update {
@@ -36,7 +46,7 @@ class AddViewModel: ViewModel() {
             it.copy(notes = note)
         }
     }
-    fun setCategory(category: String)   {
+    fun setCategory(category: Category)   {
         _state.update {
             it.copy(category = category)
         }

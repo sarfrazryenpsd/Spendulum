@@ -298,9 +298,9 @@ fun Add(addViewModel: AddViewModel = AddViewModel()) {
                             ) {
                                 // Display the selected text
                                 Text(
-                                    text = state.category ?: "Select Category",
+                                    text = state.category?.name ?: "Select Category",
                                     style = Typography.bodyMedium,
-                                    color = ButtonDefaults.buttonColors().containerColor
+                                    color = state.category?.color ?: ButtonDefaults.buttonColors().containerColor
                                 )
 
                                 // Down Arrow Icon
@@ -319,13 +319,13 @@ fun Add(addViewModel: AddViewModel = AddViewModel()) {
                                     } ,// Close menu when clicked outside
                                     modifier = Modifier.background(color = TopAppBarBackground)
                                 ) {
-                                    val items = listOf("Grocery", "Bills", "Entertainment", "Other", "Hobbies", "Takeout") // Dropdown items", "Option 3") // Dropdown items
-                                    items.forEach { category ->
+                                     // Dropdown items", "Option 3") // Dropdown items
+                                    state.categories.forEach { category ->
                                         DropdownMenuItem(
                                             text = {
                                                 Row(verticalAlignment = Alignment.CenterVertically){
-                                                    Surface(modifier = Modifier.size(10.dp), shape = CircleShape, color = Color.Blue) {  }
-                                                    Text(text = category, style = Typography.bodyMedium, modifier = Modifier.padding(start = 8.dp))
+                                                    Surface(modifier = Modifier.size(10.dp), shape = CircleShape, color = state.category!!.color) {  }
+                                                    Text(text = category.name, style = Typography.bodyMedium, modifier = Modifier.padding(start = 8.dp))
                                                 }
                                             },
                                             onClick = {
