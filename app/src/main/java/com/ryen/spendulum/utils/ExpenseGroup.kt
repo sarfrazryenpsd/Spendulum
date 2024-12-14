@@ -1,22 +1,9 @@
-package com.ryen.spendulum.models
+package com.ryen.spendulum.utils
 
+import com.ryen.spendulum.data.entity.DayExpenses
+import com.ryen.spendulum.data.entity.Expense
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.util.Locale
-
-data class Expense(
-    val amount: Double,
-    val date: LocalDateTime,
-    val note: String?,
-    val category: Category,
-    val recurrence: Recurrence,
-
-)
-
-data class DayExpenses(
-    val expenses: MutableList<Expense>,
-    var total: Double
-)
 
 fun List<Expense>.groupedByDay(): Map<LocalDate, DayExpenses> {
     val dataMap: MutableMap<LocalDate, DayExpenses> = mutableMapOf()

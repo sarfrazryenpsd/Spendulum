@@ -12,12 +12,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.ryen.spendulum.models.Expense
-import com.ryen.spendulum.models.formatToTwoDecimalPlaces
+import com.ryen.spendulum.data.entity.Expense
 import com.ryen.spendulum.ui.theme.LabelSecondary
 import com.ryen.spendulum.ui.theme.Shapes
 import com.ryen.spendulum.ui.theme.Typography
 import com.ryen.spendulum.utils.formatTime
+import com.ryen.spendulum.utils.formatToTwoDecimalPlaces
 
 @Composable
 fun ExpenseRow(expense: Expense) {

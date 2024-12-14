@@ -8,8 +8,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.ryen.spendulum.models.Expense
-import com.ryen.spendulum.models.groupedByDay
+import com.ryen.spendulum.data.entity.Expense
+import com.ryen.spendulum.utils.groupedByDay
 
 @Composable
 fun ExpensesList(expenses: List<Expense>) {

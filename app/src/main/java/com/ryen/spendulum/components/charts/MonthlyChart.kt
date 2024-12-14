@@ -10,13 +10,12 @@ import androidx.compose.ui.unit.dp
 import com.github.tehras.charts.bar.BarChart
 import com.github.tehras.charts.bar.BarChartData
 import com.github.tehras.charts.bar.renderer.yaxis.SimpleYAxisDrawer
-import com.ryen.spendulum.models.Expense
+import com.ryen.spendulum.data.entity.Expense
 import com.ryen.spendulum.models.Recurrence
-import com.ryen.spendulum.models.groupedByDayOfMonth
-import com.ryen.spendulum.models.numFormatter
 import com.ryen.spendulum.ui.theme.LabelSecondary
 import com.ryen.spendulum.ui.theme.Typography
-import java.time.DayOfWeek
+import com.ryen.spendulum.utils.groupedByDayOfMonth
+import com.ryen.spendulum.utils.numFormatter
 import java.time.LocalDate
 import java.time.YearMonth
 
@@ -27,7 +26,7 @@ fun MonthlyChart(expenses: List<Expense>, month: LocalDate) {
 
     BarChart(
         barChartData = BarChartData(
-            bars = buildList() {
+            bars = buildList {
                 for (i in 1..daysInMonth){
                     add(
                         BarChartData.Bar(

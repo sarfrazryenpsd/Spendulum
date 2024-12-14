@@ -1,5 +1,6 @@
 package com.ryen.spendulum.models
 
+import com.ryen.spendulum.data.entity.Expense
 import com.ryen.spendulum.mock.mockExpenses
 import java.time.LocalDateTime
 

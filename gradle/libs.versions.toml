@@ -11,7 +11,7 @@ composeBom = "2024.11.00"
 navigationCompose = "2.8.4"
 colorpicker = "1.1.2"
 sentry = "7.19.0"
-
+room-version = "2.6.1"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -36,10 +36,15 @@ charty = {module = "com.github.tehras:charts", version = "0.2.4-alpha"}
 pager = {module = "com.google.accompanist:accompanist-pager", version = "0.36.0"}
 sentry = {module = "io.sentry:sentry-android", version.ref = "sentry"}
 sentry-compose = {module = "io.sentry:sentry-compose-android", version.ref = "sentry"}
+room-runtime = {module = "androidx.room:room-runtime", version.ref = "room-version"}
+room-compiler = {module = "androidx.room:room-compiler", version.ref = "room-version"}
+room-ksp = {module = "androidx.room:room-compiler", version.ref = "room-version"}
+room-ktx = {module = "androidx.room:room-ktx", version.ref = "room-version"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 sentry = {id = "io.sentry.android.gradle", version = "4.14.1"}
+ksp = { id = "com.google.devtools.ksp", version = "2.0.21-1.0.27"}
 

@@ -37,14 +37,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.ryen.spendulum.R
 import com.ryen.spendulum.components.ExpensesList
-import com.ryen.spendulum.mock.mockExpenses
 import com.ryen.spendulum.models.Recurrence
-import com.ryen.spendulum.models.formatToTwoDecimalPlaces
 import com.ryen.spendulum.ui.theme.BackGroundElevate
 import com.ryen.spendulum.ui.theme.LabelSecondary
 import com.ryen.spendulum.ui.theme.SpendulumTheme
 import com.ryen.spendulum.ui.theme.TopAppBarBackground
 import com.ryen.spendulum.ui.theme.Typography
+import com.ryen.spendulum.utils.formatToTwoDecimalPlaces
 import com.ryen.spendulum.viewModels.ExpenseViewModel
 
 @Composable

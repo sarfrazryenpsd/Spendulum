@@ -12,11 +12,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.ryen.spendulum.models.DayExpenses
-import com.ryen.spendulum.models.formatToTwoDecimalPlaces
+import com.ryen.spendulum.data.entity.DayExpenses
 import com.ryen.spendulum.ui.theme.LabelSecondary
 import com.ryen.spendulum.ui.theme.Typography
 import com.ryen.spendulum.utils.formatDay
+import com.ryen.spendulum.utils.formatToTwoDecimalPlaces
 import java.time.LocalDate
 
 @Composable

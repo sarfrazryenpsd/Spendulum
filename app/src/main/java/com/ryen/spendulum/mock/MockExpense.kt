@@ -1,8 +1,8 @@
 package com.ryen.spendulum.mock
 
 import androidx.compose.ui.graphics.Color
-import com.ryen.spendulum.models.Category
-import com.ryen.spendulum.models.Expense
+import com.ryen.spendulum.data.entity.Category
+import com.ryen.spendulum.data.entity.Expense
 import com.ryen.spendulum.models.Recurrence
 import io.github.serpro69.kfaker.Faker
 import java.time.LocalDateTime
@@ -42,8 +42,9 @@ val mockCategories = listOf(
     ),
 )
 
-val mockExpenses: List<Expense> = List(30) {
+val mockExpenses: List<Expense> = List(30) { index ->
     Expense(
+        id = index,
         amount = faker.random.nextInt(min = 1, max = 999)
             .toDouble() + faker.random.nextDouble(),
         date = LocalDateTime.now().minus(
