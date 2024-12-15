@@ -23,7 +23,7 @@ data class Expense(
     val date: LocalDateTime,
     val note: String?,
     val category: Category,
-    val recurrence: Recurrence,
+    val recurrence: String,
 )
 
 data class DayExpenses(

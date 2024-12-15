@@ -25,6 +25,7 @@ class ExpenseViewModel(private val expenseRepository: ExpenseRepository): ViewMo
     init {
         viewModelScope.launch(Dispatchers.IO){
             setRecurrence(Recurrence.Daily)
+            expenseRepository.getAllExpenses()
         }
     }
 
@@ -49,6 +50,7 @@ class ExpenseViewModel(private val expenseRepository: ExpenseRepository): ViewMo
             }
         }
     }
+
 
     fun openDropdown(){
         _uiState.update { currentState ->

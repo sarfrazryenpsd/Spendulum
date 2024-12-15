@@ -31,12 +31,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ryen.spendulum.R
 import com.ryen.spendulum.components.ExpensesList
+import com.ryen.spendulum.data.AppDatabase
+import com.ryen.spendulum.data.repository.ExpenseRepository
 import com.ryen.spendulum.models.Recurrence
 import com.ryen.spendulum.ui.theme.BackGroundElevate
 import com.ryen.spendulum.ui.theme.LabelSecondary
@@ -45,9 +49,18 @@ import com.ryen.spendulum.ui.theme.TopAppBarBackground
 import com.ryen.spendulum.ui.theme.Typography
 import com.ryen.spendulum.utils.formatToTwoDecimalPlaces
 import com.ryen.spendulum.viewModels.ExpenseViewModel
+import com.ryen.spendulum.viewModels.viewModelFactory
 
 @Composable
-fun Expenses(expenseViewModel: ExpenseViewModel = ExpenseViewModel()) {
+fun Expenses() {
+
+    val context = LocalContext.current
+    val expenseViewModel: ExpenseViewModel = viewModel(
+        factory = viewModelFactory {
+            ExpenseViewModel(ExpenseRepository(AppDatabase.getInstance(context).expenseDao()))
+        }
+    )
+
     val state by expenseViewModel.uiState.collectAsState()
     var expanded by remember { mutableStateOf(false) }
     val recurrences = listOf(

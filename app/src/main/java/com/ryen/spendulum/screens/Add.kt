@@ -2,6 +2,7 @@
 
 package com.ryen.spendulum.screens
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -43,13 +44,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.marosseleng.compose.material3.datetimepickers.date.ui.dialog.DatePickerDialog
 import com.ryen.spendulum.components.TableRow
+import com.ryen.spendulum.data.AppDatabase
+import com.ryen.spendulum.data.entity.Category
+import com.ryen.spendulum.data.repository.ExpenseRepository
 import com.ryen.spendulum.models.Recurrence
 import com.ryen.spendulum.ui.theme.BackGroundElevate
 import com.ryen.spendulum.ui.theme.Divider
@@ -58,12 +64,18 @@ import com.ryen.spendulum.ui.theme.SpendulumTheme
 import com.ryen.spendulum.ui.theme.TopAppBarBackground
 import com.ryen.spendulum.ui.theme.Typography
 import com.ryen.spendulum.viewModels.AddViewModel
+import com.ryen.spendulum.viewModels.viewModelFactory
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 @Composable
-fun Add(addViewModel: AddViewModel = AddViewModel()) {
-
+fun Add() {
+    val context = LocalContext.current
+    val addViewModel: AddViewModel = viewModel(
+        factory = viewModelFactory {
+            AddViewModel(ExpenseRepository(AppDatabase.getInstance(context).expenseDao()))
+        }
+    )
     val state by addViewModel.state.collectAsState()
 
     Scaffold (
@@ -101,7 +113,7 @@ fun Add(addViewModel: AddViewModel = AddViewModel()) {
                         content = {
                             BasicTextField(
                                 value = state.amount,
-                                onValueChange = { newValue ->
+                                onValueChange = { newValue: String ->
                                     val filteredValue = newValue.filter { it.isDigit() || it == '.' }
 
                                     // Parse and enforce max value
@@ -254,7 +266,7 @@ fun Add(addViewModel: AddViewModel = AddViewModel()) {
                         content = {
                             BasicTextField(
                                 value = state.notes,
-                                onValueChange = { newValue ->
+                                onValueChange = { newValue: String ->
                                     addViewModel.setNote(newValue)
                                 },
                                 decorationBox = { innerTextField ->
@@ -320,7 +332,7 @@ fun Add(addViewModel: AddViewModel = AddViewModel()) {
                                     modifier = Modifier.background(color = TopAppBarBackground)
                                 ) {
                                      // Dropdown items", "Option 3") // Dropdown items
-                                    state.categories.forEach { category ->
+                                    state.categories.forEach { category: Category ->
                                         DropdownMenuItem(
                                             text = {
                                                 Row(verticalAlignment = Alignment.CenterVertically){
@@ -339,7 +351,14 @@ fun Add(addViewModel: AddViewModel = AddViewModel()) {
                     )
                 }
                 Button(
-                    onClick = {},
+                    onClick = {
+                        if(state.amount.isNotEmpty() && state.category != null) {
+                            addViewModel.addExpense()
+                            Toast.makeText(context, "Expense added!", Toast.LENGTH_SHORT).show()
+                        }else{
+                            Toast.makeText(context, "Fill required fields!", Toast.LENGTH_SHORT).show()
+                        }
+                    },
                     shape = RoundedCornerShape(10.dp),
                     modifier = Modifier
                         .padding(16.dp)

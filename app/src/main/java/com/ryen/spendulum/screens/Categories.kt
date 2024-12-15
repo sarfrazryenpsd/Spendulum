@@ -44,12 +44,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.github.skydoves.colorpicker.compose.AlphaTile
@@ -57,6 +59,9 @@ import com.github.skydoves.colorpicker.compose.HsvColorPicker
 import com.github.skydoves.colorpicker.compose.rememberColorPickerController
 import com.ryen.spendulum.R
 import com.ryen.spendulum.components.TableRow
+import com.ryen.spendulum.data.AppDatabase
+import com.ryen.spendulum.data.repository.CategoryRepository
+import com.ryen.spendulum.data.repository.ExpenseRepository
 import com.ryen.spendulum.ui.theme.BackGroundElevate
 import com.ryen.spendulum.ui.theme.Destructive
 import com.ryen.spendulum.ui.theme.Divider
@@ -66,6 +71,8 @@ import com.ryen.spendulum.ui.theme.SpendulumTheme
 import com.ryen.spendulum.ui.theme.TopAppBarBackground
 import com.ryen.spendulum.ui.theme.Typography
 import com.ryen.spendulum.viewModels.CategoriesViewModel
+import com.ryen.spendulum.viewModels.ExpenseViewModel
+import com.ryen.spendulum.viewModels.viewModelFactory
 import me.saket.swipe.SwipeAction
 import me.saket.swipe.SwipeableActionsBox
 
@@ -73,8 +80,15 @@ import me.saket.swipe.SwipeableActionsBox
 fun Categories(
     modifier: Modifier = Modifier,
     navController: NavController,
-    categoriesViewModel: CategoriesViewModel = CategoriesViewModel()
 ) {
+
+    val context = LocalContext.current
+    val categoriesViewModel: CategoriesViewModel = viewModel(
+        factory = viewModelFactory {
+            CategoriesViewModel(CategoryRepository(AppDatabase.getInstance(context).categoryDao()))
+        }
+    )
+
     val state by categoriesViewModel.uiState.collectAsState()
     val controller = rememberColorPickerController()
 
