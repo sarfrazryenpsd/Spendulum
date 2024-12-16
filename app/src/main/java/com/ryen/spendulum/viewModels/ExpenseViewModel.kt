@@ -38,7 +38,7 @@ class ExpenseViewModel(private val expenseRepository: ExpenseRepository): ViewMo
             val filteredExpenses = expenseRepository.getExpensesInRange(start, end)
 
             // Calculate total amount in the date range
-            val totalInRange = filteredExpenses.sumOf { it.amount }
+            val totalInRange = filteredExpenses.sumOf { it.expense.amount }
 
             // Update UI state with the new data
             _uiState.update { currentState ->

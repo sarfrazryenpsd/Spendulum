@@ -5,12 +5,12 @@ import androidx.room.TypeConverter
 
 class ColorConverter {
     @TypeConverter
-    fun fromColor(color: Color): Long {
-        return color.value.toLong() // Convert to ARGB long
+    fun fromColor(color: Color): Int {
+        return color.value.toInt() // Convert to ARGB long
     }
 
     @TypeConverter
-    fun toColor(colorLong: Long): Color {
-        return Color(colorLong.toInt()) // Convert back to Color
+    fun toColor(colorLong: Int): Color {
+        return Color(colorLong) // Convert back to Color
     }
 }

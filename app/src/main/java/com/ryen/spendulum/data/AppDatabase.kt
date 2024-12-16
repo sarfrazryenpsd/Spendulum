@@ -5,7 +5,6 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.ryen.spendulum.data.converter.ColorConverter
 import com.ryen.spendulum.data.converter.LocalDateTimeConverter
 import com.ryen.spendulum.data.dao.CategoryDao
 import com.ryen.spendulum.data.dao.ExpenseDao
@@ -13,7 +12,7 @@ import com.ryen.spendulum.data.entity.Category
 import com.ryen.spendulum.data.entity.Expense
 
 @Database(entities = [Expense::class, Category::class], version = 1, exportSchema = false)
-@TypeConverters(LocalDateTimeConverter::class, ColorConverter::class)
+@TypeConverters(LocalDateTimeConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun expenseDao(): ExpenseDao
     abstract fun categoryDao(): CategoryDao

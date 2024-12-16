@@ -146,7 +146,7 @@ fun Categories(
                                     Surface(
                                         onClick = categoriesViewModel::showColorPicker,
                                         shape = CircleShape,
-                                        color = category.color,
+                                        color = Color( category.color),
                                         border = BorderStroke(2.dp, Color.White),
                                         modifier = Modifier.size(16.dp) // Explicit size
                                     ) { }

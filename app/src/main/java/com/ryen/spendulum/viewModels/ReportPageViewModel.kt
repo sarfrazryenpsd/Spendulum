@@ -2,6 +2,7 @@ package com.ryen.spendulum.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ryen.spendulum.data.entity.ExpenseModel
 import com.ryen.spendulum.mock.mockExpenses
 import com.ryen.spendulum.models.Recurrence
 import com.ryen.spendulum.models.ReportState
@@ -26,12 +27,8 @@ class ReportPageViewModel(private val page: Int, val recurrence: Recurrence): Vi
             val (start, end, dayInRange) = calculateDateRange(recurrence, page)
 
 
-            val filteredExpenses = mockExpenses.filter { expense ->
-                (expense.date.toLocalDate().isAfter(start) && expense.date.toLocalDate()
-                    .isBefore(end)) || expense.date.toLocalDate()
-                    .isEqual(start) || expense.date.toLocalDate().isEqual(end)
-            }
-            val totalInRange = filteredExpenses.sumOf { it.amount }
+            val filteredExpenses = emptyList<ExpenseModel>()
+            val totalInRange = filteredExpenses.sumOf { it.expense.amount }
             val avgPerDay = totalInRange / dayInRange
 
             viewModelScope.launch (Dispatchers.Main){

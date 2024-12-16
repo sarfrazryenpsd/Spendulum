@@ -69,7 +69,7 @@ class AddViewModel(private val expenseRepository: ExpenseRepository): ViewModel(
             id = 0,
             amount = amount,
             date = date,
-            category = category,
+            categoryName = category.name,
             note = currentState.notes,
             recurrence = currentState.recurrence.name
         )

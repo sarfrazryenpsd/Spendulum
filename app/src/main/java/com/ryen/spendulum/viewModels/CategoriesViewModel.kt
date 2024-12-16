@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class CategoriesViewModel(private val categoryRepository: CategoryRepository): ViewModel(){
+class CategoriesViewModel(private val categoryRepository: CategoryRepository) : ViewModel() {
     private val _uiState = MutableStateFlow(CategoriesState())
     val uiState = _uiState.asStateFlow()
 
@@ -25,16 +25,19 @@ class CategoriesViewModel(private val categoryRepository: CategoryRepository): V
             currState.copy(categoryColor = color)
         }
     }
+
     fun setCategoryName(name: String) {
         _uiState.update { currState ->
             currState.copy(categoryName = name)
         }
     }
+
     fun showColorPicker() {
         _uiState.update { currState ->
             currState.copy(colorPickerShowing = true)
         }
     }
+
     fun hideColorPicker() {
         _uiState.update { currState ->
             currState.copy(colorPickerShowing = false)
@@ -44,7 +47,7 @@ class CategoriesViewModel(private val categoryRepository: CategoryRepository): V
     fun createCategory() {
         val newCategory = Category(
             name = _uiState.value.categoryName,
-            color = _uiState.value.categoryColor // Convert Color to String
+            color = _uiState.value.categoryColor.value.toInt() // Convert Color to String
         )
 
         viewModelScope.launch {
@@ -54,7 +57,8 @@ class CategoriesViewModel(private val categoryRepository: CategoryRepository): V
                 it.copy(
                     categoryName = "",
                     categoryColor = Primary, // Reset color
-                    categories = it.categories.toMutableList().apply { add(newCategory) } // Add to UI list
+                    categories = it.categories.toMutableList()
+                        .apply { add(newCategory) } // Add to UI list
                 )
             }
         }

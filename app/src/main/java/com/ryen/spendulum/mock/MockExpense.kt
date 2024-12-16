@@ -17,28 +17,28 @@ val mockCategories = listOf(
             faker.random.nextInt(0, 255),
             faker.random.nextInt(0, 255),
             faker.random.nextInt(0, 255)
-        )
+        ).value.toInt()
     ),
     Category(
         "Subscriptions", Color(
             faker.random.nextInt(0, 255),
             faker.random.nextInt(0, 255),
             faker.random.nextInt(0, 255)
-        )
+        ).value.toInt()
     ),
     Category(
         "Take out", Color(
             faker.random.nextInt(0, 255),
             faker.random.nextInt(0, 255),
             faker.random.nextInt(0, 255)
-        )
+        ).value.toInt()
     ),
     Category(
         "Hobbies", Color(
             faker.random.nextInt(0, 255),
             faker.random.nextInt(0, 255),
             faker.random.nextInt(0, 255)
-        )
+        ).value.toInt()
     ),
 )
 
@@ -59,8 +59,8 @@ val mockExpenses: List<Expense> = List(30) { index ->
                 Recurrence.Weekly,
                 Recurrence.Yearly
             )
-        ),
+        ).name,
         note = faker.name.firstName(),
-        category = faker.random.randomValue(mockCategories)
+        categoryName = faker.random.randomValue(mockCategories).name
     )
 }

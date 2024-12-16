@@ -14,7 +14,7 @@ interface CategoryDao {
     fun getAllCategories(): Flow<List<Category>>
 
     @Query("SELECT * from category WHERE name = :category")
-    fun getCategory(category: Category): Flow<Category>
+    fun getCategory(category: String): Flow<Category>
 
     // Specify the conflict strategy as IGNORE, when the user tries to add an
     // existing Item into the database Room ignores the conflict.

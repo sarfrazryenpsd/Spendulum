@@ -11,6 +11,7 @@ import com.github.tehras.charts.bar.BarChart
 import com.github.tehras.charts.bar.BarChartData
 import com.github.tehras.charts.bar.renderer.yaxis.SimpleYAxisDrawer
 import com.ryen.spendulum.data.entity.Expense
+import com.ryen.spendulum.data.entity.ExpenseModel
 import com.ryen.spendulum.models.Recurrence
 import com.ryen.spendulum.ui.theme.LabelSecondary
 import com.ryen.spendulum.ui.theme.Typography
@@ -19,7 +20,7 @@ import com.ryen.spendulum.utils.numFormatter
 import java.time.Month
 
 @Composable
-fun YearlyChart(expenses: List<Expense>) {
+fun YearlyChart(expenses: List<ExpenseModel>) {
     val groupedExpenses = expenses.groupedByMonth()
 
     BarChart(

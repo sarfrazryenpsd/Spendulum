@@ -78,14 +78,17 @@ fun Add() {
     )
     val state by addViewModel.state.collectAsState()
 
-    Scaffold (
+    Scaffold(
         topBar = {
-            MediumTopAppBar(title = { Text("Add",style = Typography.titleLarge) }, colors = TopAppBarDefaults.mediumTopAppBarColors(
-                containerColor = TopAppBarBackground,
-                titleContentColor = Color.White
-            ))
+            MediumTopAppBar(
+                title = { Text("Add", style = Typography.titleLarge) },
+                colors = TopAppBarDefaults.mediumTopAppBarColors(
+                    containerColor = TopAppBarBackground,
+                    titleContentColor = Color.White
+                )
+            )
         },
-        content = {innerPadding ->
+        content = { innerPadding ->
             val maxAmount = 1000000.00
 
             val recurrences = listOf(
@@ -114,7 +117,8 @@ fun Add() {
                             BasicTextField(
                                 value = state.amount,
                                 onValueChange = { newValue: String ->
-                                    val filteredValue = newValue.filter { it.isDigit() || it == '.' }
+                                    val filteredValue =
+                                        newValue.filter { it.isDigit() || it == '.' }
 
                                     // Parse and enforce max value
                                     val amount = filteredValue.toDoubleOrNull() ?: 0.0
@@ -173,7 +177,7 @@ fun Add() {
 
                                 // Down Arrow Icon
                                 Icon(
-                                    imageVector = if(!expanded) Icons.Default.KeyboardArrowDown else Icons.Default.KeyboardArrowUp,
+                                    imageVector = if (!expanded) Icons.Default.KeyboardArrowDown else Icons.Default.KeyboardArrowUp,
                                     contentDescription = "Dropdown Arrow",
                                     tint = ButtonDefaults.buttonColors().containerColor
                                 )
@@ -184,16 +188,23 @@ fun Add() {
                                     expanded = expanded,
                                     onDismissRequest = {
                                         expanded = false
-                                    } ,// Close menu when clicked outside
+                                    },// Close menu when clicked outside
                                     modifier = Modifier.background(color = TopAppBarBackground)
                                 ) {
-                                     // Dropdown items", "Option 3") // Dropdown items
+                                    // Dropdown items", "Option 3") // Dropdown items
                                     recurrences.forEach { recurrence ->
                                         DropdownMenuItem(
                                             text = {
                                                 Row(verticalAlignment = Alignment.CenterVertically) {
-                                                    Surface(modifier = Modifier.size(14.dp), shape = CircleShape, color = Color.Blue) {  }
-                                                    Text(text = recurrence.name, modifier = Modifier.padding(start = 8.dp))
+                                                    Surface(
+                                                        modifier = Modifier.size(14.dp),
+                                                        shape = CircleShape,
+                                                        color = Color.Blue
+                                                    ) { }
+                                                    Text(
+                                                        text = recurrence.name,
+                                                        modifier = Modifier.padding(start = 8.dp)
+                                                    )
                                                 }
                                             },
                                             onClick = {
@@ -222,16 +233,17 @@ fun Add() {
 
                             Row(
                                 modifier = Modifier
-                                    .clickable { datePickerShowing = !datePickerShowing }, // Make Row clickable
+                                    .clickable {
+                                        datePickerShowing = !datePickerShowing
+                                    }, // Make Row clickable
                                 verticalAlignment = Alignment.CenterVertically // Align Text and Icon
-                            ){
-                                if(state.date.isNotEmpty()){
+                            ) {
+                                if (state.date.isNotEmpty()) {
                                     Text(
                                         text = state.date,
                                         color = ButtonDefaults.buttonColors().containerColor
                                     )
-                                }
-                                else{
+                                } else {
                                     Icon(
                                         imageVector = Icons.Default.DateRange,
                                         contentDescription = "Date Icon",
@@ -241,14 +253,17 @@ fun Add() {
                                             .size(20.dp)
                                     )
                                 }
-                                if(datePickerShowing){
+                                if (datePickerShowing) {
                                     DatePickerDialog(
                                         onDismissRequest = { datePickerShowing = false },
                                         onDateChange = { date ->
                                             addViewModel.setDate(date)
                                             datePickerShowing = false
                                         },
-                                        initialDate = LocalDate.parse(state.date, DateTimeFormatter.ofPattern("dd MMM yyyy"))
+                                        initialDate = LocalDate.parse(
+                                            state.date,
+                                            DateTimeFormatter.ofPattern("dd MMM yyyy")
+                                        )
                                     )
                                 }
                             }
@@ -289,7 +304,7 @@ fun Add() {
                                 modifier = Modifier.weight(1f),
                                 cursorBrush = SolidColor(Color.White),
 
-                            )
+                                )
                         }
                     )
                     HorizontalDivider(
@@ -309,15 +324,17 @@ fun Add() {
                                 verticalAlignment = Alignment.CenterVertically // Align Text and Icon
                             ) {
                                 // Display the selected text
+                                val color = state.category?.color?.let { Color(it) }
+                                    ?: ButtonDefaults.buttonColors().containerColor
                                 Text(
                                     text = state.category?.name ?: "Select Category",
                                     style = Typography.bodyMedium,
-                                    color = state.category?.color ?: ButtonDefaults.buttonColors().containerColor
+                                    color = color
                                 )
 
                                 // Down Arrow Icon
                                 Icon(
-                                    imageVector = if(!expanded) Icons.Default.KeyboardArrowDown else Icons.Default.KeyboardArrowUp,
+                                    imageVector = if (!expanded) Icons.Default.KeyboardArrowDown else Icons.Default.KeyboardArrowUp,
                                     contentDescription = "Dropdown Arrow",
                                     tint = ButtonDefaults.buttonColors().containerColor
                                 )
@@ -328,16 +345,24 @@ fun Add() {
                                     expanded = expanded,
                                     onDismissRequest = {
                                         expanded = false
-                                    } ,// Close menu when clicked outside
+                                    },// Close menu when clicked outside
                                     modifier = Modifier.background(color = TopAppBarBackground)
                                 ) {
-                                     // Dropdown items", "Option 3") // Dropdown items
+                                    // Dropdown items", "Option 3") // Dropdown items
                                     state.categories.forEach { category: Category ->
                                         DropdownMenuItem(
                                             text = {
-                                                Row(verticalAlignment = Alignment.CenterVertically){
-                                                    Surface(modifier = Modifier.size(10.dp), shape = CircleShape, color = state.category!!.color) {  }
-                                                    Text(text = category.name, style = Typography.bodyMedium, modifier = Modifier.padding(start = 8.dp))
+                                                Row(verticalAlignment = Alignment.CenterVertically) {
+                                                    Surface(
+                                                        modifier = Modifier.size(10.dp),
+                                                        shape = CircleShape,
+                                                        color = color
+                                                    ) { }
+                                                    Text(
+                                                        text = category.name,
+                                                        style = Typography.bodyMedium,
+                                                        modifier = Modifier.padding(start = 8.dp)
+                                                    )
                                                 }
                                             },
                                             onClick = {
@@ -352,11 +377,12 @@ fun Add() {
                 }
                 Button(
                     onClick = {
-                        if(state.amount.isNotEmpty() && state.category != null) {
+                        if (state.amount.isNotEmpty() && state.category != null) {
                             addViewModel.addExpense()
                             Toast.makeText(context, "Expense added!", Toast.LENGTH_SHORT).show()
-                        }else{
-                            Toast.makeText(context, "Fill required fields!", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(context, "Fill required fields!", Toast.LENGTH_SHORT)
+                                .show()
                         }
                     },
                     shape = RoundedCornerShape(10.dp),
@@ -374,8 +400,6 @@ fun Add() {
         }
     )
 }
-
-
 
 
 @Preview

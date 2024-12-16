@@ -2,14 +2,15 @@ package com.ryen.spendulum.utils
 
 import com.ryen.spendulum.data.entity.DayExpenses
 import com.ryen.spendulum.data.entity.Expense
+import com.ryen.spendulum.data.entity.ExpenseModel
 import java.time.LocalDate
 import java.util.Locale
 
-fun List<Expense>.groupedByDay(): Map<LocalDate, DayExpenses> {
+fun List<ExpenseModel>.groupedByDay(): Map<LocalDate, DayExpenses> {
     val dataMap: MutableMap<LocalDate, DayExpenses> = mutableMapOf()
 
     this.forEach { expense ->
-        val date = expense.date.toLocalDate()
+        val date = expense.expense.date.toLocalDate()
 
         if (dataMap[date] == null) {
             dataMap[date] = DayExpenses(
@@ -19,21 +20,21 @@ fun List<Expense>.groupedByDay(): Map<LocalDate, DayExpenses> {
         }
 
         dataMap[date]!!.expenses.add(expense)
-        dataMap[date]!!.total = dataMap[date]!!.total.plus(expense.amount)
+        dataMap[date]!!.total = dataMap[date]!!.total.plus(expense.expense.amount)
     }
 
     dataMap.values.forEach { dayExpenses ->
-        dayExpenses.expenses.sortBy { expense -> expense.date }
+        dayExpenses.expenses.sortBy { expense -> expense.expense.date }
     }
 
     return dataMap.toSortedMap(compareByDescending { it })
 }
 
-fun List<Expense>.groupedByDayOfWeek(): Map<String, DayExpenses> {
+fun List<ExpenseModel>.groupedByDayOfWeek(): Map<String, DayExpenses> {
     val dataMap: MutableMap<String, DayExpenses> = mutableMapOf()
 
     this.forEach { expense ->
-        val dayOfWeek = expense.date.toLocalDate().dayOfWeek
+        val dayOfWeek = expense.expense.date.toLocalDate().dayOfWeek
 
         if (dataMap[dayOfWeek.name] == null) {
             dataMap[dayOfWeek.name] = DayExpenses(
@@ -43,17 +44,17 @@ fun List<Expense>.groupedByDayOfWeek(): Map<String, DayExpenses> {
         }
 
         dataMap[dayOfWeek.name]!!.expenses.add(expense)
-        dataMap[dayOfWeek.name]!!.total = dataMap[dayOfWeek.name]!!.total.plus(expense.amount)
+        dataMap[dayOfWeek.name]!!.total = dataMap[dayOfWeek.name]!!.total.plus(expense.expense.amount)
     }
 
     return dataMap.toSortedMap(compareByDescending { it })
 }
 
-fun List<Expense>.groupedByDayOfMonth(): Map<Int, DayExpenses> {
+fun List<ExpenseModel>.groupedByDayOfMonth(): Map<Int, DayExpenses> {
     val dataMap: MutableMap<Int, DayExpenses> = mutableMapOf()
 
     this.forEach { expense ->
-        val dayOfMonth = expense.date.toLocalDate().dayOfMonth
+        val dayOfMonth = expense.expense.date.toLocalDate().dayOfMonth
 
         if (dataMap[dayOfMonth] == null) {
             dataMap[dayOfMonth] = DayExpenses(
@@ -63,17 +64,17 @@ fun List<Expense>.groupedByDayOfMonth(): Map<Int, DayExpenses> {
         }
 
         dataMap[dayOfMonth]!!.expenses.add(expense)
-        dataMap[dayOfMonth]!!.total = dataMap[dayOfMonth]!!.total.plus(expense.amount)
+        dataMap[dayOfMonth]!!.total = dataMap[dayOfMonth]!!.total.plus(expense.expense.amount)
     }
 
     return dataMap.toSortedMap(compareByDescending { it })
 }
 
-fun List<Expense>.groupedByMonth(): Map<String, DayExpenses> {
+fun List<ExpenseModel>.groupedByMonth(): Map<String, DayExpenses> {
     val dataMap: MutableMap<String, DayExpenses> = mutableMapOf()
 
     this.forEach { expense ->
-        val month = expense.date.toLocalDate().month
+        val month = expense.expense.date.toLocalDate().month
 
         if (dataMap[month.name] == null) {
             dataMap[month.name] = DayExpenses(
@@ -83,7 +84,7 @@ fun List<Expense>.groupedByMonth(): Map<String, DayExpenses> {
         }
 
         dataMap[month.name]!!.expenses.add(expense)
-        dataMap[month.name]!!.total = dataMap[month.name]!!.total.plus(expense.amount)
+        dataMap[month.name]!!.total = dataMap[month.name]!!.total.plus(expense.expense.amount)
     }
 
     return dataMap.toSortedMap(compareByDescending { it })
