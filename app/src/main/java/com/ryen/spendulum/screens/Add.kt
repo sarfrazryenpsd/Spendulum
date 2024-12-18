@@ -77,6 +77,7 @@ fun Add() {
         }
     )
     val state by addViewModel.state.collectAsState()
+    var expandedCategory by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
@@ -316,11 +317,11 @@ fun Add() {
                         label = "Category",
                         content = {
 
-                            var expanded by remember { mutableStateOf(false) } // Track DropdownMenu state
+                             // Track DropdownMenu state
 
                             Row(
                                 modifier = Modifier
-                                    .clickable { expanded = !expanded }, // Make Row clickable
+                                    .clickable { expandedCategory = !expandedCategory }, // Make Row clickable
                                 verticalAlignment = Alignment.CenterVertically // Align Text and Icon
                             ) {
                                 // Display the selected text
@@ -334,7 +335,7 @@ fun Add() {
 
                                 // Down Arrow Icon
                                 Icon(
-                                    imageVector = if (!expanded) Icons.Default.KeyboardArrowDown else Icons.Default.KeyboardArrowUp,
+                                    imageVector = if (!expandedCategory) Icons.Default.KeyboardArrowDown else Icons.Default.KeyboardArrowUp,
                                     contentDescription = "Dropdown Arrow",
                                     tint = ButtonDefaults.buttonColors().containerColor
                                 )
@@ -342,9 +343,9 @@ fun Add() {
 
                                 // Dropdown Menu
                                 DropdownMenu(
-                                    expanded = expanded,
+                                    expanded = expandedCategory,
                                     onDismissRequest = {
-                                        expanded = false
+                                        expandedCategory = false
                                     },// Close menu when clicked outside
                                     modifier = Modifier.background(color = TopAppBarBackground)
                                 ) {
@@ -367,7 +368,7 @@ fun Add() {
                                             },
                                             onClick = {
                                                 addViewModel.setCategory(category) // Update selected item
-                                                expanded = false // Close the menu
+                                                expandedCategory = false // Close the menu
                                             })
                                     }
                                 }

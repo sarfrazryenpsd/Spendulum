@@ -1,11 +1,12 @@
 package com.ryen.spendulum.viewModels
 
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ryen.spendulum.models.CategoriesState
 import com.ryen.spendulum.data.entity.Category
 import com.ryen.spendulum.data.repository.CategoryRepository
+import com.ryen.spendulum.models.CategoriesState
 import com.ryen.spendulum.ui.theme.Primary
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +18,18 @@ class CategoriesViewModel(private val categoryRepository: CategoryRepository) : 
     private val _uiState = MutableStateFlow(CategoriesState())
     val uiState = _uiState.asStateFlow()
 
-    val allCategories: Flow<List<Category>> = categoryRepository.getAllCategories()
+    private val allCategories: Flow<List<Category>> = categoryRepository.getAllCategories()
+
+    init {
+        // Launch a coroutine to collect the flow
+        viewModelScope.launch {
+            allCategories.collect { categories ->
+                _uiState.update { currState ->
+                    currState.copy(categories = categories.toMutableList())
+                }
+            }
+        }
+    }
 
 
     fun setCategoryColor(color: Color) {
@@ -47,7 +59,7 @@ class CategoriesViewModel(private val categoryRepository: CategoryRepository) : 
     fun createCategory() {
         val newCategory = Category(
             name = _uiState.value.categoryName,
-            color = _uiState.value.categoryColor.value.toInt() // Convert Color to String
+            color = _uiState.value.categoryColor.toArgb()// Convert Color to String
         )
 
         viewModelScope.launch {

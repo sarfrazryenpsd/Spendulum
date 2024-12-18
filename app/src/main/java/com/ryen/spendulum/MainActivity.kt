@@ -19,6 +19,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -53,7 +54,19 @@ class MainActivity : ComponentActivity() {
                             ) {
                                 NavigationBarItem(
                                     selected = backStackEntry.value?.destination?.route == "expenses",
-                                    onClick = { navController.navigate("expenses") },
+                                    onClick = { navController.navigate("expenses"){
+                                        // Pop up to the start destination of the graph to
+                                        // avoid building up a large stack of destinations
+                                        // on the back stack as users select items
+                                        popUpTo(navController.graph.findStartDestination().id) {
+                                            saveState = true
+                                        }
+                                        // Avoid multiple copies of the same destination when
+                                        // re-selecting the same item
+                                        launchSingleTop = true
+                                        // Restore state when re-selecting a previously selected item
+                                        restoreState = true
+                                    } },
                                     label = {
                                         Text(text = "Expenses")
                                     },
@@ -66,7 +79,19 @@ class MainActivity : ComponentActivity() {
                                 )
                                 NavigationBarItem(
                                     selected = backStackEntry.value?.destination?.route == "reports",
-                                    onClick = { navController.navigate("reports") },
+                                    onClick = { navController.navigate("reports"){
+                                        // Pop up to the start destination of the graph to
+                                        // avoid building up a large stack of destinations
+                                        // on the back stack as users select items
+                                        popUpTo(navController.graph.findStartDestination().id) {
+                                            saveState = true
+                                        }
+                                        // Avoid multiple copies of the same destination when
+                                        // re-selecting the same item
+                                        launchSingleTop = true
+                                        // Restore state when re-selecting a previously selected item
+                                        restoreState = true
+                                    } },
                                     label = {
                                         Text(text = "Reports")
                                     },
@@ -79,7 +104,19 @@ class MainActivity : ComponentActivity() {
                                 )
                                 NavigationBarItem(
                                     selected = backStackEntry.value?.destination?.route == "add",
-                                    onClick = { navController.navigate("add") },
+                                    onClick = { navController.navigate("add"){
+                                        // Pop up to the start destination of the graph to
+                                        // avoid building up a large stack of destinations
+                                        // on the back stack as users select items
+                                        popUpTo(navController.graph.findStartDestination().id) {
+                                            saveState = true
+                                        }
+                                        // Avoid multiple copies of the same destination when
+                                        // re-selecting the same item
+                                        launchSingleTop = true
+                                        // Restore state when re-selecting a previously selected item
+                                        restoreState = true
+                                    } },
                                     label = {
                                         Text(text = "Add")
                                     },
@@ -94,7 +131,19 @@ class MainActivity : ComponentActivity() {
                                     selected = backStackEntry.value?.destination?.route?.startsWith(
                                         "settings"
                                     ) ?: false,
-                                    onClick = { navController.navigate("settings") },
+                                    onClick = { navController.navigate("settings"){
+                                        // Pop up to the start destination of the graph to
+                                        // avoid building up a large stack of destinations
+                                        // on the back stack as users select items
+                                        popUpTo(navController.graph.findStartDestination().id) {
+                                            saveState = true
+                                        }
+                                        // Avoid multiple copies of the same destination when
+                                        // re-selecting the same item
+                                        launchSingleTop = true
+                                        // Restore state when re-selecting a previously selected item
+                                        restoreState = true
+                                    } },
                                     label = {
                                         Text(text = "Settings")
                                     },
