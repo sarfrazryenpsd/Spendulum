@@ -11,7 +11,9 @@ import com.ryen.spendulum.utils.calculateDateRange
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -20,12 +22,20 @@ class ExpenseViewModel(private val expenseRepository: ExpenseRepository): ViewMo
     private val _uiState = MutableStateFlow(ExpenseState())
     val uiState = _uiState.asStateFlow()
 
-
-
     init {
-        viewModelScope.launch(Dispatchers.IO){
+        viewModelScope.launch{
             setRecurrence(Recurrence.Daily)
-            expenseRepository.getAllExpenses()
+            expenseRepository.getAllExpenses().stateIn(
+                scope = viewModelScope,
+                started = SharingStarted.WhileSubscribed(5000),
+                initialValue = emptyList()
+            ).collect { expenses ->
+                _uiState.update { currentState ->
+                    currentState.copy(
+                        expenses = expenses
+                    )
+                }
+            }
         }
     }
 
@@ -51,19 +61,4 @@ class ExpenseViewModel(private val expenseRepository: ExpenseRepository): ViewMo
         }
     }
 
-
-    fun openDropdown(){
-        _uiState.update { currentState ->
-            currentState.copy(
-                isOpen = true
-            )
-        }
-    }
-    fun closeDropDown(){
-        _uiState.update { currentState ->
-            currentState.copy(
-                isOpen = false
-            )
-        }
-    }
 }

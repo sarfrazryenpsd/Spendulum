@@ -16,7 +16,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Button
@@ -55,6 +54,7 @@ import com.marosseleng.compose.material3.datetimepickers.date.ui.dialog.DatePick
 import com.ryen.spendulum.components.TableRow
 import com.ryen.spendulum.data.AppDatabase
 import com.ryen.spendulum.data.entity.Category
+import com.ryen.spendulum.data.repository.CategoryRepository
 import com.ryen.spendulum.data.repository.ExpenseRepository
 import com.ryen.spendulum.models.Recurrence
 import com.ryen.spendulum.ui.theme.BackGroundElevate
@@ -65,7 +65,6 @@ import com.ryen.spendulum.ui.theme.TopAppBarBackground
 import com.ryen.spendulum.ui.theme.Typography
 import com.ryen.spendulum.viewModels.AddViewModel
 import com.ryen.spendulum.viewModels.viewModelFactory
-import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 @Composable
@@ -73,7 +72,10 @@ fun Add() {
     val context = LocalContext.current
     val addViewModel: AddViewModel = viewModel(
         factory = viewModelFactory {
-            AddViewModel(ExpenseRepository(AppDatabase.getInstance(context).expenseDao()))
+            AddViewModel(
+                ExpenseRepository(AppDatabase.getInstance(context).expenseDao()),
+                CategoryRepository(AppDatabase.getInstance(context).categoryDao())
+            )
         }
     )
     val state by addViewModel.state.collectAsState()
@@ -239,21 +241,11 @@ fun Add() {
                                     }, // Make Row clickable
                                 verticalAlignment = Alignment.CenterVertically // Align Text and Icon
                             ) {
-                                if (state.date.isNotEmpty()) {
-                                    Text(
-                                        text = state.date,
-                                        color = ButtonDefaults.buttonColors().containerColor
-                                    )
-                                } else {
-                                    Icon(
-                                        imageVector = Icons.Default.DateRange,
-                                        contentDescription = "Date Icon",
-                                        tint = ButtonDefaults.buttonColors().containerColor,
-                                        modifier = Modifier
-                                            .padding(start = 4.dp)
-                                            .size(20.dp)
-                                    )
-                                }
+                                Text(
+                                    text = state.date.format(DateTimeFormatter.ofPattern("dd MMM yyyy")),
+                                    color = ButtonDefaults.buttonColors().containerColor
+                                )
+
                                 if (datePickerShowing) {
                                     DatePickerDialog(
                                         onDismissRequest = { datePickerShowing = false },
@@ -261,10 +253,7 @@ fun Add() {
                                             addViewModel.setDate(date)
                                             datePickerShowing = false
                                         },
-                                        initialDate = LocalDate.parse(
-                                            state.date,
-                                            DateTimeFormatter.ofPattern("dd MMM yyyy")
-                                        )
+                                        initialDate = state.date.toLocalDate()
                                     )
                                 }
                             }
@@ -321,7 +310,14 @@ fun Add() {
 
                             Row(
                                 modifier = Modifier
-                                    .clickable { expandedCategory = !expandedCategory }, // Make Row clickable
+                                    .clickable { if(state.categories.isNotEmpty()) {expandedCategory = !expandedCategory}
+                                               else {
+                                        Toast.makeText(
+                                            context,
+                                            "No categories found! Add some in settings!",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }}, // Make Row clickable
                                 verticalAlignment = Alignment.CenterVertically // Align Text and Icon
                             ) {
                                 // Display the selected text
