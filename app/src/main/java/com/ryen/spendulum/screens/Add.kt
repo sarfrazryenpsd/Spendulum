@@ -353,7 +353,7 @@ fun Add() {
                                                     Surface(
                                                         modifier = Modifier.size(10.dp),
                                                         shape = CircleShape,
-                                                        color = color
+                                                        color = Color(category.color) //Converting Color from Argb(Int) to Color
                                                     ) { }
                                                     Text(
                                                         text = category.name,

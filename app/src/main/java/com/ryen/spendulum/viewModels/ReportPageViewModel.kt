@@ -2,46 +2,50 @@ package com.ryen.spendulum.viewModels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ryen.spendulum.data.entity.ExpenseModel
-import com.ryen.spendulum.mock.mockExpenses
+import com.ryen.spendulum.data.repository.ExpenseRepository
 import com.ryen.spendulum.models.Recurrence
 import com.ryen.spendulum.models.ReportState
-import com.ryen.spendulum.utils.DateRangeData
 import com.ryen.spendulum.utils.calculateDateRange
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.LocalTime
-import java.time.YearMonth
 
-class ReportPageViewModel(private val page: Int, val recurrence: Recurrence): ViewModel() {
+class ReportPageViewModel(
+    private val expenseRepository: ExpenseRepository,
+    private val page: Int,
+    val recurrence: Recurrence
+): ViewModel() {
     private val _uiState = MutableStateFlow(ReportState())
     val uiState = _uiState.asStateFlow()
 
     init {
-        viewModelScope.launch (Dispatchers.IO){
+        viewModelScope.launch(Dispatchers.IO) {
             val (start, end, dayInRange) = calculateDateRange(recurrence, page)
 
+            expenseRepository.getAllExpenses()
+                .collect { expenses ->
+                    // Filter expenses within the date range
+                    val expensesInRange = expenses.filter {
+                        it.expense.date.toLocalDate() in start..end
+                    }
 
-            val filteredExpenses = emptyList<ExpenseModel>()
-            val totalInRange = filteredExpenses.sumOf { it.expense.amount }
-            val avgPerDay = totalInRange / dayInRange
+                    val totalInRange = expensesInRange.sumOf { it.expense.amount }
+                    val avgPerDay = if (dayInRange > 0) totalInRange / dayInRange.toDouble() else 0.0
 
-            viewModelScope.launch (Dispatchers.Main){
-                _uiState.update { currentValue ->
-                    currentValue.copy(
-                        expense = filteredExpenses,
-                        dateStart = LocalDateTime.of(start, LocalTime.MIN),
-                        dateEnd = LocalDateTime.of(end, LocalTime.MAX),
-                        avgPerDay = avgPerDay,
-                        totalInRange = totalInRange
-                    )
+                    // Update UI state directly
+                    _uiState.update { currentValue ->
+                        currentValue.copy(
+                            expense = expensesInRange,
+                            dateStart = start.atStartOfDay(),
+                            dateEnd = end.atTime(LocalTime.MAX),
+                            avgPerDay = avgPerDay,
+                            totalInRange = totalInRange
+                        )
+                    }
                 }
-            }
         }
     }
 }

@@ -15,11 +15,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.ryen.spendulum.components.charts.MonthlyChart
 import com.ryen.spendulum.components.charts.WeeklyChart
 import com.ryen.spendulum.components.charts.YearlyChart
+import com.ryen.spendulum.data.AppDatabase
+import com.ryen.spendulum.data.repository.ExpenseRepository
 import com.ryen.spendulum.models.Recurrence
 import com.ryen.spendulum.ui.theme.Typography
 import com.ryen.spendulum.utils.numFormatter
@@ -31,12 +34,20 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun ReportsPage(
     recurrence: Recurrence,
-    page: Int,
-    vm: ReportPageViewModel = viewModel(
-        key = "$page-${recurrence.name}", factory = viewModelFactory {
-        ReportPageViewModel(page, recurrence)
-    })
+    page: Int
 ) {
+    val context = LocalContext.current // Retrieve the context
+
+    val vm: ReportPageViewModel = viewModel(
+        key = "$page-${recurrence.name}", // Use unique key for each instance
+        factory = viewModelFactory {
+            ReportPageViewModel(
+                ExpenseRepository(AppDatabase.getInstance(context).expenseDao()),
+                page,
+                recurrence
+            )
+        }
+    )
     val state by vm.uiState.collectAsState()
     val formatter = DateTimeFormatter.ofPattern("dd MMM")
     Column(

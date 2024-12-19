@@ -24,7 +24,7 @@ class ExpenseViewModel(private val expenseRepository: ExpenseRepository): ViewMo
 
     init {
         viewModelScope.launch{
-            setRecurrence(Recurrence.Daily)
+            setRecurrence(Recurrence.Weekly)
             expenseRepository.getAllExpenses().stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5000),
