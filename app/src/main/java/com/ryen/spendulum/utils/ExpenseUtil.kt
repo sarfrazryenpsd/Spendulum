@@ -14,7 +14,7 @@ fun calculateDateRange(recurrence: Recurrence, page: Int): DateRangeData {
     val today = LocalDate.now()
     lateinit var start: LocalDate
     lateinit var end: LocalDate
-    var daysInRange: Int = 7
+    var daysInRange = 7
 
     when (recurrence) {
         Recurrence.Daily -> {
