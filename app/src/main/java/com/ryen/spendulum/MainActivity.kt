@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -14,6 +13,7 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -37,16 +37,24 @@ import io.sentry.compose.withSentryObservableEffect
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        @Suppress("DEPRECATION")
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+
         setContent {
             SpendulumTheme {
                 var showBottomBar by rememberSaveable { mutableStateOf(true) }
                 val navController = rememberNavController().withSentryObservableEffect()
                 val backStackEntry = navController.currentBackStackEntryAsState()
+                val currentRoute = backStackEntry.value?.destination?.route
 
-                showBottomBar = backStackEntry.value?.destination?.route != "settings/categories"
+                LaunchedEffect(currentRoute) {
+                    if (currentRoute == "settings/categories") {
+                        @Suppress("DEPRECATION")
+                        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+                    } else {
+                        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING)
+                    }
+                }
+
+                showBottomBar = currentRoute != "settings/categories"
 
                 Scaffold(
                     bottomBar = {
@@ -55,7 +63,7 @@ class MainActivity : ComponentActivity() {
                                 containerColor = TopAppBarBackground
                             ) {
                                 NavigationBarItem(
-                                    selected = backStackEntry.value?.destination?.route == "expenses",
+                                    selected = currentRoute == "expenses",
                                     onClick = { navController.navigate("expenses"){
                                         // Pop up to the start destination of the graph to
                                         // avoid building up a large stack of destinations
@@ -80,7 +88,7 @@ class MainActivity : ComponentActivity() {
                                     }
                                 )
                                 NavigationBarItem(
-                                    selected = backStackEntry.value?.destination?.route == "reports",
+                                    selected = currentRoute == "reports",
                                     onClick = { navController.navigate("reports"){
                                         // Pop up to the start destination of the graph to
                                         // avoid building up a large stack of destinations
@@ -105,7 +113,7 @@ class MainActivity : ComponentActivity() {
                                     }
                                 )
                                 NavigationBarItem(
-                                    selected = backStackEntry.value?.destination?.route == "add",
+                                    selected = currentRoute == "add",
                                     onClick = { navController.navigate("add"){
                                         // Pop up to the start destination of the graph to
                                         // avoid building up a large stack of destinations
@@ -130,7 +138,7 @@ class MainActivity : ComponentActivity() {
                                     }
                                 )
                                 NavigationBarItem(
-                                    selected = backStackEntry.value?.destination?.route?.startsWith(
+                                    selected = currentRoute?.startsWith(
                                         "settings"
                                     ) ?: false,
                                     onClick = { navController.navigate("settings"){
